@@ -1,0 +1,138 @@
+:host {
+  display: inline-block;
+  cursor: pointer;
+  --areanet-cookiebanner-default-font-family: Arial;
+  --areanet-cookiebanner-default-font-size: 16px;
+  --areanet-cookiebanner-default-color-background: #252838;
+  --areanet-cookiebanner-default-color-text: #FFFFFF;
+  --areanet-cookiebanner-default-color-primary:#B60A00;
+  --areanet-cookiebanner-default-color-primary-text: var(--areanet-cookiebanner-default-color-text);
+  --areanet-cookiebanner-default-color-secondary:#666666;
+  --areanet-cookiebanner-default-color-secondary-text: var(--areanet-cookiebanner-default-color-text);
+
+  --font-size: var(--areanet-cookiebanner-font-size, var(--areanet-cookiebanner-default-font-size));
+
+  font-size:var(--font-size);
+}
+
+:host *{
+  font-family: var(--areanet-cookiebanner-font-family, var(--areanet-cookiebanner-default-font-family));
+}
+
+.modal-container{
+  background-color: var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-default-color-background));
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  position: fixed;
+  bottom:0;
+  left:25%;
+  width:50%;
+  padding:12px;
+  text-align: center;
+}
+
+.modal-header, .modal-header *{
+  color: var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
+  font-weight:bold;
+  font-size:calc(1.2 * var(--font-size));
+}
+
+.modal-header h2,
+.modal-header p{
+  margin:0;
+}
+
+.modal-header h2{
+  margin-bottom:6px;
+}
+
+.modal-header p,
+.modal-header a,
+.privacy p,
+.privacy a{
+  color: var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-default-color-secondary));
+  font-size:calc(0.8 * var(--font-size));
+  font-weight: normal;
+}
+
+.privacy p{
+  margin-top:12px;
+  margin-bottom:6px;
+}
+
+.modal-header a:hover,
+.privacy a:hover{
+  color: var(--areanet-cookiebanner-color-ptext, var(--areanet-cookiebanner-default-color-text));
+}
+
+.modal-body, .modal-body *{
+  color: var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
+  font-size: var(--font-size);
+}
+
+.modal-body:not(.privacy){
+  margin:24px 0;
+}
+
+button{
+  font-size:var(--font-size);
+  border:1px solid transparent;
+  padding:3px 24px;
+  margin:0 12px;
+  cursor:pointer;
+}
+
+button.primary{
+  background-color: var(--areanet-cookiebanner-color-primary, var(--areanet-cookiebanner-default-color-primary));
+  color: var(--areanet-cookiebanner-color-primary-text, var(--areanet-cookiebanner-default-color-primary-text));
+}
+
+button.primary:hover{
+  border-color:var(--areanet-cookiebanner-color-primary-text, var(--areanet-cookiebanner-default-color-primary-text));
+}
+
+button.secondary{
+  background-color: var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-default-color-secondary));
+  color: var(--areanet-cookiebanner-color-secondary-text, var(--areanet-cookiebanner-default-color-secondary-text));
+}
+
+button.secondary:hover{
+  border-color:var(--areanet-cookiebanner-color-secondary-text, var(--areanet-cookiebanner-default-color-secondary-text));
+}
+
+.settings{
+  display:flex;
+  flex-direction: column;
+  text-align:left;
+}
+
+.settings-row{
+  display:flex;
+  flex-direction: row;
+  margin-bottom:16px;
+}
+
+.label{
+  flex:1;
+}
+
+.checkbox{
+  display:none;
+}
+
+.checbox-mark{
+  border-radius: 4px;
+  text-align:center;
+  width:20px;
+  height:20px;
+  background-color:var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-default-color-secondary));
+  color:var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-default-color-secondary));
+  border: 1px solid var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
+
+}
+
+.checkbox:checked + .checbox-mark{
+  background-color:var(--areanet-cookiebanner-color-primary, var(--areanet-cookiebanner-default-color-primary));
+  color:var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
+  opacity: 1;
+}
