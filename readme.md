@@ -1,72 +1,89 @@
-![Built With Stencil](https://img.shields.io/badge/-Built%20With%20Stencil-16161d.svg?logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjIuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPgo8c3ZnIHZlcnNpb249IjEuMSIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCA1MTIgNTEyOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI%2BCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyI%2BCgkuc3Qwe2ZpbGw6I0ZGRkZGRjt9Cjwvc3R5bGU%2BCjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik00MjQuNywzNzMuOWMwLDM3LjYtNTUuMSw2OC42LTkyLjcsNjguNkgxODAuNGMtMzcuOSwwLTkyLjctMzAuNy05Mi43LTY4LjZ2LTMuNmgzMzYuOVYzNzMuOXoiLz4KPHBhdGggY2xhc3M9InN0MCIgZD0iTTQyNC43LDI5Mi4xSDE4MC40Yy0zNy42LDAtOTIuNy0zMS05Mi43LTY4LjZ2LTMuNkgzMzJjMzcuNiwwLDkyLjcsMzEsOTIuNyw2OC42VjI5Mi4xeiIvPgo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDI0LjcsMTQxLjdIODcuN3YtMy42YzAtMzcuNiw1NC44LTY4LjYsOTIuNy02OC42SDMzMmMzNy45LDAsOTIuNywzMC43LDkyLjcsNjguNlYxNDEuN3oiLz4KPC9zdmc%2BCg%3D%3D&colorA=16161d&style=flat-square)
+# Kostenloser Cookie-Banner der AREA-NET GmbH
 
-# Stencil Component Starter
+## Hinweise
 
-This is a starter project for building a standalone Web Component using Stencil.
+- Wird kein externes Modul (z.B. Google Analytics genutzt), wird ein reiner Info-Banner angezeigt
+- Folgende Module und Anbieter werden aktuelle untersützt. Die entsprechenden Codes werden dynamisch bei Aktivierung durch den Benutzer eingebunden:
+  - Google Analytics
+  - Facebook Pixel
+- Third-Party Cookies, nicht technisch-notwendige Cookies und externe Skripte der obigen Anbieter werden erst nach der Zustimmung durch den Benutzer eingebunden
+  - Sollte im Browser Javascript deaktiviert sein, werden diese Cookies und externe Skripte nicht eingebunden
+- Google Analytics und Facebook Pixel darf nicht manuell eingebunden sein.
 
-Stencil is also great for building entire apps. For that, use the [stencil-app-starter](https://github.com/ionic-team/stencil-app-starter) instead.
+## Installation
 
-# Stencil
+(1) Download release.zip und entpacken
 
-Stencil is a compiler for building fast web apps using Web Components.
+(2) Upload des Ordners "areanet-cookiebanner" auf den Server
 
-Stencil combines the best concepts of the most popular frontend frameworks into a compile-time rather than run-time tool.  Stencil takes TypeScript, JSX, a tiny virtual DOM layer, efficient one-way data binding, an asynchronous rendering pipeline (similar to React Fiber), and lazy-loading out of the box, and generates 100% standards-based Web Components that run in any browser supporting the Custom Elements v1 spec.
+(3) Einbindung der Skripte im Header
 
-Stencil components are just Web Components, so they work in any major framework or with no framework at all.
-
-## Getting Started
-
-To start building a new web component using Stencil, clone this repo to a new directory:
-
-```bash
-git clone https://github.com/ionic-team/stencil-component-starter.git my-component
-cd my-component
-git remote rm origin
+```
+<script type="module" src="areanet-cookiebanner/areanet-cookiebanner.esm.js"></script>
+<script nomodule src="areanet-cookiebanner/areanet-cookiebanner.js"></script>
 ```
 
-and run:
+(4) Einbdung des Buttons z.B. in der Footer-Navigation
 
-```bash
-npm install
-npm start
+```
+<areanet-cookiebanner module-ga="UAE-32323-2323" cookies="phpsessid,Session,temporär" module-fb="FB-ID" imprint-url="impressum.html" privacy-url="datenschutz.html">Cookie-Einstellungen</areanet-cookiebanner>
 ```
 
-To build the component for production, run:
+## Konfiguration 
 
-```bash
-npm run build
+### Attribute
+
+Alle Attribute sind optional. Das Setzen von Impressum und Datenschutzerklärung wird empfohlen, da die normalen Links eventuell vom Banner überdeckt sein könnten.
+
+| Attribut | Wert/e | Beispiel | Beschreibung |
+| --- | --- | --- | --- |
+| cookies | Name1,Beschreibung1,Laufzeit1;Name2,... | phpsessid,Session,temporär | Fügt eingesetzte technisch notwendige Cookie bei der Auflistung dieser Cookies im Banner hinzu. Name, Beschreibung und Laufzeit pro Cookie kommagetrennt, mehrere Cookies können per Semikolen erfasst werden. |
+| module-fb | Facebook Pixel-ID | | |
+| module-ga | Google Analytics-ID | | |
+| imprint-url | URL | impressum.html | Pfad/URL zur Impressumsseite |
+| privacy-url | URL | datenschutz.html | Pfad/URL zur Datenschutzseite |
+
+### CSS-Anpassungen
+
+CSS-Anpassungen können über CSS-Variable durchgeführt werden.
+
+```
+<style>
+    :root{
+        --areanet-cookiebanner-color-primary: #e1001a;
+    }
+</style>
 ```
 
-To run the unit tests for the components, run:
 
-```bash
-npm test
-```
+**CSS-Variablen**
 
-Need help? Check out our docs [here](https://stenciljs.com/docs/my-first-component).
+- --areanet-cookiebanner-color-background *(Hintergrundfarbe)*
+- --areanet-cookiebanner-color-text *(Schriftfarbe)*
+- --areanet-cookiebanner-color-primary *(Hintergrundfarbe des hervorgehobenen Buttons)*
+- --areanet-cookiebanner-color-primary-text *(Schriftfarbe des hervorgehobenen Buttons)*
+- --areanet-cookiebanner-color-secondary *(Hintergrundfarbe der normalen Buttons)*
+- --areanet-cookiebanner-color-secondary-text *(Schriftfarbe der normalen Buttons)*
+- --areanet-cookiebanner-font-family *(Schriftart)*
+- --areanet-cookiebanner-font-size *(Schriftgröße des Textes, Headlines etc. werden automatisch angepasst)*
 
+## Lizenz
 
-## Naming Components
+Der Cookie-Banner darf kostenlos - auch kommerziell - eingesetzt weden. Es ist nicht erlaubt Änderungen am Quellcode vorzunehmen oder den Hinweis auf die AREA-NET GmbH zu entfernen oder auszublenden. Rechtliche Gewährleistung und/oder Haftung sind ausgeschlossen und werden nicht übernommen.
 
-When creating new component tags, we recommend _not_ using `stencil` in the component name (ex: `<stencil-datepicker>`). This is because the generated component has little to nothing to do with Stencil; it's just a web component!
+## Anbieter
 
-Instead, use a prefix that fits your company or any name for a group of related components. For example, all of the Ionic generated web components use the prefix `ion`.
+AREA-NET GmbH 
+Öschstrasse 33 
+73072 Donzdorf
 
+E-Mail: info@area-net.de
 
-## Using this component
+Web: https://www.area-net.de
 
-### Script tag
+Geschäftsführer 
+Gaugler Stephan, Köller Holger, Schmid Markus
 
-- [Publish to NPM](https://docs.npmjs.com/getting-started/publishing-npm-packages)
-- Put a script tag similar to this `<script src='https://unpkg.com/my-component@0.0.1/dist/mycomponent.js'></script>` in the head of your index.html
-- Then you can use the element anywhere in your template, JSX, html etc
-
-### Node Modules
-- Run `npm install my-component --save`
-- Put a script tag similar to this `<script src='node_modules/my-component/dist/mycomponent.js'></script>` in the head of your index.html
-- Then you can use the element anywhere in your template, JSX, html etc
-
-### In a stencil-starter app
-- Run `npm install my-component --save`
-- Add an import to the npm packages `import my-component;`
-- Then you can use the element anywhere in your template, JSX, html etc
+Handelsregister HRB 541303 Ulm 
+Sitz der Gesellschaft: Donzdorf 
+UST-ID: DE208051892

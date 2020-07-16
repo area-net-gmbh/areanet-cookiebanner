@@ -1,5 +1,5 @@
 {
-  "name": "cookie-banner",
+  "name": "areanet-cookiebanner",
   "version": "0.0.1",
   "description": "Stencil Component Starter",
   "main": "dist/index.js",
@@ -9,7 +9,7 @@
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/cookie-banner/cookie-banner.js",
+  "unpkg": "dist/areanet-cookiebanner/areanet-cookiebanner.js",
   "files": [
     "dist/",
     "loader/"
@@ -19,7 +19,8 @@
     "start": "stencil build --dev --watch --serve",
     "test": "stencil test --spec --e2e",
     "test.watch": "stencil test --spec --e2e --watchAll",
-    "generate": "stencil generate"
+    "generate": "stencil generate",
+    "release": "stencil build --prod && mkdir dist/areanet-cookiebanner/api && cp php/index.php dist/areanet-cookiebanner/api && cd dist && zip -r release.zip areanet-cookiebanner && mv release.zip ../"
   },
   "devDependencies": {
     "@stencil/core": "^1.12.2"
