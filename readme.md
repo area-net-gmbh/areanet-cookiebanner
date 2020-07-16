@@ -73,17 +73,16 @@ Der Cookie-Banner darf kostenlos - auch kommerziell - eingesetzt weden. Es ist n
 
 ## Anbieter
 
-AREA-NET GmbH 
-Öschstrasse 33 
-73072 Donzdorf
+AREA-NET GmbH  
+Öschstrasse 33  
+73072 Donzdorf 
 
-E-Mail: info@area-net.de
-
+E-Mail: info@area-net.de  
 Web: https://www.area-net.de
 
-Geschäftsführer 
+Geschäftsführer  
 Gaugler Stephan, Köller Holger, Schmid Markus
 
-Handelsregister HRB 541303 Ulm 
-Sitz der Gesellschaft: Donzdorf 
+Handelsregister HRB 541303 Ulm  
+Sitz der Gesellschaft: Donzdorf  
 UST-ID: DE208051892
