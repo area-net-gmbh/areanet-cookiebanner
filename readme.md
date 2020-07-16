@@ -81,7 +81,11 @@ CSS-Anpassungen können über CSS-Variable durchgeführt werden.
 
 ## Lizenz
 
-Der Cookie-Banner darf kostenlos - auch kommerziell - eingesetzt weden. Es ist nicht erlaubt Änderungen am Quellcode vorzunehmen oder den Hinweis auf die AREA-NET GmbH zu entfernen oder auszublenden. Rechtliche Gewährleistung und/oder Haftung sind ausgeschlossen und werden nicht übernommen.
+Der Cookie-Banner darf kostenlos - auch kommerziell - eingesetzt weden. Es ist nicht erlaubt Änderungen am Quellcode vorzunehmen oder den Hinweis auf die AREA-NET GmbH zu entfernen oder auszublenden. 
+
+## Disclaimer
+
+Rechtliche Gewährleistung und/oder Haftung sind ausgeschlossen und werden nicht übernommen.
 
 ## Anbieter
 
