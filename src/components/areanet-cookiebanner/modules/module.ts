@@ -1,12 +1,20 @@
-import { Cookies } from "../cookies";
+import { CookieService } from "../services/cookie.service";
+import { CookieInterface } from "../interfaces/cookie.interface";
 
 export class Module{
-    protected cookies : Cookies = new Cookies();
+    protected cookieService : CookieService = new CookieService();
     protected data: any;
 
+    public doCookieNoteShow: boolean = false;
+    public doVendorNoteShow: boolean = false;
+    public cookiesRequired : CookieInterface[] = [];
+    public cookiesOptional : CookieInterface[] = [];
     public description: string = '';
     public key: string = '';
     public label: string = '';
+    public vendor: string = '';
+    public privacyUrl: string = '';
+    public useExternalSource : boolean = false;
 
     accept(){
 

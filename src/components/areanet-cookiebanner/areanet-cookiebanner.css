@@ -26,8 +26,8 @@
   position: fixed;
   bottom:0;
   left:25%;
-  width:50%;
-  padding:12px;
+  width:48%;
+  padding:1%;
   text-align: center;
 }
 
@@ -49,7 +49,8 @@
 .modal-header p,
 .modal-header a,
 .privacy p,
-.privacy a{
+.privacy a,
+.privacy span{
   color: var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-default-color-secondary));
   font-size:calc(0.8 * var(--font-size));
   font-weight: normal;
@@ -104,6 +105,8 @@ button.secondary:hover{
   display:flex;
   flex-direction: column;
   text-align:left;
+  max-height:calc(100vh - 260px);
+  overflow:scroll;
 }
 
 .settings-row{
@@ -114,6 +117,13 @@ button.secondary:hover{
 
 .label{
   flex:1;
+}
+
+.description{
+  font-size:calc(0.8 * var(--font-size));
+  margin-bottom:4px;
+  margin-top:2px;
+  display:block;
 }
 
 .checkbox{
@@ -135,4 +145,83 @@ button.secondary:hover{
   background-color:var(--areanet-cookiebanner-color-primary, var(--areanet-cookiebanner-default-color-primary));
   color:var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
   opacity: 1;
+}
+
+.notes-list,
+.notes-header{
+  display:flex;
+  flex-direction: row;
+}
+
+
+.notes-list .first span{
+  padding-left:12px;
+}
+
+.notes-header b{
+  cursor: pointer;
+}
+
+
+.notes-toogle::before{
+  content: '\2609';
+}
+
+.notes-toogle.vendor::before{
+  content: '\26AD';
+}
+
+.notes-toogle.external::before{
+  content: '\26A0';
+}
+
+
+.notes-toogle b{
+  text-decoration: underline;
+  font-weight: normal;
+}
+
+.notes-list div,
+.notes-header div{
+  flex: 1;
+}
+
+.notes-header,
+.notes-header *,
+.notes-list,
+.notes-list *{
+  font-size:calc(0.8 * var(--font-size));
+  color: var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-default-color-secondary));
+}
+
+.modal-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 1600px) {
+  .modal-container {
+    width:78%;
+    left:10%;
+  }
+}
+
+
+@media only screen and (max-width: 960px) {
+  .modal-container {
+    width:98%;
+    left:0;
+  }
+}
+
+@media only screen and (max-width: 640px) {
+  .modal-footer {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .modal-footer button{
+    margin-bottom:6px;
+  }
 }

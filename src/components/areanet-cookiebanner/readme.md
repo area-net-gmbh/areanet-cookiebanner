@@ -50,6 +50,17 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property      | Attribute      | Description | Type     | Default     |
+| ------------- | -------------- | ----------- | -------- | ----------- |
+| `cookies`     | `cookies`      |             | `string` | `undefined` |
+| `gaeProperty` | `gae-property` |             | `number` | `undefined` |
+| `imprintUrl`  | `imprint-url`  |             | `string` | `undefined` |
+| `privacyUrl`  | `privacy-url`  |             | `string` | `undefined` |
+| `thirdparty`  | `thirdparty`   |             | `string` | `undefined` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
