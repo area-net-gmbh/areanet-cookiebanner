@@ -3,6 +3,7 @@ import { Modules } from "./modules/modules";
 import { Module } from './modules/module';
 import { CookieService } from './services/cookie.service';
 import { CookieInterface } from './interfaces/cookie.interface';
+import { LoggerService } from './services/logger.service';
 
 @Component({
   tag: 'areanet-cookiebanner',
@@ -13,6 +14,7 @@ export class AreanetCookiebanner {
   cookieService : CookieService = new CookieService();
   cookieConsentName: string = 'areanet-cookiebanner-consent';
   cookiesRequired : CookieInterface[] = [];
+  loggerService : LoggerService = new LoggerService(this.cookieService);
   modules : Module[] = [];
   
   doShowBannerStore: number = 0;
@@ -34,7 +36,7 @@ export class AreanetCookiebanner {
   @State() show : boolean = false;
 
   componentWillLoad(){
-   
+
     for(const moduleName in Modules){
       const module : Module = new Modules[moduleName]();
       const propertyName    = 'module-' + module.key;
@@ -65,10 +67,12 @@ export class AreanetCookiebanner {
 
     if(!this.cookieService.get(this.cookieConsentName)){
       this.doShowBanner = this.isMinimal ? 1 : 2;
-      
+      var logData = {'tech': true};
       for(const m of this.modules){
         m.decline();
+        logData[m.key] = false;
       }
+      this.loggerService.write(logData, true);
     }else{
       for(const m of this.modules){
         m.render();
@@ -80,26 +84,32 @@ export class AreanetCookiebanner {
   }
 
   acceptAll(){
+    var logData = {'tech': true};
     this.cookieService.set(this.cookieConsentName);
     for(const m of this.modules){
       m.accept();
+      logData[m.key] = true;
     }
+    this.loggerService.write(logData, false);
     this.doShowBanner = 0;
     this.doShowSettings = false;
-    window.location.reload();
+    //window.location.reload();
   }
 
   acceptRequired(){
+    var logData = {'tech': true};
     for(const m of this.modules){
       m.decline();
+      logData[m.key] = false;
     }
+    this.loggerService.write(logData, false);
     this.cookieService.set(this.cookieConsentName);
     this.doShowBanner = 0;
   }
 
 
   acceptChoosen(){
-    
+    var logData = {'tech': true};
     const checkboxes = this.el.shadowRoot.querySelectorAll('.checkbox-module');
     [].forEach.call(checkboxes, (c) => {
       for(const m of this.modules){
@@ -107,13 +117,15 @@ export class AreanetCookiebanner {
         if(m.key == c.id){
           if(c.checked){
             m.accept();
+            logData[m.key] = true;
           }else{
             m.decline();
+            logData[m.key] = false;
           }
         }
       };
     });
-
+    this.loggerService.write(logData, false);
     this.cookieService.set(this.cookieConsentName);
     this.doShowSettings = false;
     window.location.reload();

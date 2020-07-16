@@ -21,10 +21,18 @@ export class CookieService{
         return null;
     }
     
-    set(name, lax = true){
-        var expired = new Date();
-        expired.setFullYear(expired.getFullYear() + 2);
-        document.cookie = name + "=true; expires=" + expired.toUTCString() + (lax ? '; SameSite=Lax' : '');
+    set(name, value : any = true, isTemp = false){
+        var expired = null;
+
+        if(isTemp){
+            var current = new Date();
+            expired = new Date(current.getTime() + 2*60000);
+        }else{
+            expired = new Date();
+            expired.setFullYear(expired.getFullYear() + 2);
+        }
+        
+        document.cookie = name + "=" + value + "; expires=" + expired.toUTCString()+'; secure; SameSite=strict';
     }
 
 }

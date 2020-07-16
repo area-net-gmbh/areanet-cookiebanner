@@ -10,7 +10,16 @@
   - Sollte im Browser Javascript deaktiviert sein, werden diese Cookies und externe Skripte nicht eingebunden
 - Google Analytics und Facebook Pixel darf nicht manuell eingebunden sein.
 
+## Dokumentation
+
+- Die Zustimmungen der Benutzer werden aufgrund der DSGVO-Dokumentationspflichten anonymisiert in der SQLite-Datenbank *areanet-cookiebanner/api/.htstore* gespeichert
+- Die Datei .htstore sollte in der Regel nicht direkt über den Browser aufrufbar sein. Sollte die Datei über den Browser aufrufbar sein, sollte z.B. die .htaccess-Datei entsprechend angepasst werden
+- Die Daten werden (wenn mcrypt installiert) verschlüsselt in der Datenbank gespeichert und können von dort im Falle eines Audits ausgelesen werden
+- Eine Oberfläche zum Auslesen der Dokumentation besteht aktuell noch nicht
+
 ## Installation
+
+(0) Für die Dokumentation wird auf dem Server PHP7 mit SQLite-Unterstützung vorausgesetzt. Empfohlene zusätzliche Erweiterungen: mcyrpt
 
 (1) Download release.zip und entpacken
 
@@ -30,6 +39,10 @@
 ```
 
 ## Konfiguration 
+
+### PHP-Skript
+
+Es wird empfohlen den Wert SECURE_KEY in der Datei *areanet-cookiebanner/api/index.php* individuell abzuändern, empfohlen wird eine Länge von 32 Zeichen. Mit diesem Key werden die Daten in der Datenbank verschlüsselt abgelegt. Für die spätere Entschlüsselung ist zwingend wieder dieser Key zu verwenden.
 
 ### Attribute
 
@@ -54,7 +67,6 @@ CSS-Anpassungen können über CSS-Variable durchgeführt werden.
     }
 </style>
 ```
-
 
 **CSS-Variablen**
 
