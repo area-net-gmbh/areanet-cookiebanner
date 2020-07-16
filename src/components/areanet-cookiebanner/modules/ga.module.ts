@@ -23,7 +23,7 @@ export class GaModule extends Module{
     init(data: any){
         super.init(data);
 
-        this.cookiesRequired = [{name: 'ga-disable-' + this.data, lifetime: '2 Jahre', note: 'Deaktivierung Google Analytics'}];
+        this.cookiesRequired = [{name: 'ga-disable-' + this.data, lifetime: '1 Jahr', note: 'Deaktivierung Google Analytics'}];
     }
 
     decline(){

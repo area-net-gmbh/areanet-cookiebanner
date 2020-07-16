@@ -6,7 +6,7 @@ export class FbModule extends Module{
     description: string     = 'Um unsere Website besser für Sie optimieren zu können, nutzen wir Facebook Pixel zur Analyse. \
                                Dafür binden wir einen externen Dienst von Facebook ein, der \
                                Zugriff auf personenbezogene Daten haben und auswerten kann.';
-    cookiesRequired         = [{name: 'fb-disabled', lifetime: '2 Jahre', note: 'Deaktivierung Facebook Pixel'}];
+    cookiesRequired         = [{name: 'fb-disabled', lifetime: '1 Jahr', note: 'Deaktivierung Facebook Pixel'}];
     privacyUrl              = 'https://www.facebook.com/about/privacy/update';
     vendor                  = 'Facebook Ireland Limited';
     useExternalSource       = true;
