@@ -93,7 +93,7 @@ export class AreanetCookiebanner {
     this.loggerService.write(logData, false);
     this.doShowBanner = 0;
     this.doShowSettings = false;
-    //window.location.reload();
+    window.location.reload();
   }
 
   acceptRequired(){
