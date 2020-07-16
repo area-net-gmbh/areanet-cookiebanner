@@ -165,7 +165,12 @@ export class AreanetCookiebanner {
                       <div class="notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
                         <div class="first"><span>areanet-cookiebanner-consent</span></div>
                         <div>Cookie-Einstellungen</div>
-                        <div>2 Jahre</div>
+                        <div>1 Jahr</div>
+                      </div>
+                      <div class="notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
+                        <div class="first"><span>areanet-cookiebanner-protect</span></div>
+                        <div>Cookie-Einstellungen</div>
+                        <div>temporär</div>
                       </div>
                       {this.cookiesRequired.map((c) => {
                           return <div class="notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
