@@ -12,6 +12,7 @@
   - Sollte im Browser Javascript deaktiviert sein, werden diese Cookies und externe Skripte nicht eingebunden
 - Google Analytics und Facebook Pixel darf nicht manuell eingebunden sein.
 
+
 ## Dokumentation
 
 - Die Zustimmungen der Benutzer werden aufgrund der DSGVO-Dokumentationspflichten anonymisiert in der SQLite-Datenbank *areanet-cookiebanner/api/.htstore* gespeichert
