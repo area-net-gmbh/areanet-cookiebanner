@@ -1,4 +1,4 @@
-import { Component, h, Prop, Element, State, Host} from '@stencil/core';
+import { Component, h, Prop, Element, State, Host, Method} from '@stencil/core';
 import { Modules } from "./modules/modules";
 import { Module } from './modules/module';
 import { CookieService } from './services/cookie.service';
@@ -70,6 +70,7 @@ export class AreanetCookiebanner {
       var logData = {'tech': true};
       for(const m of this.modules){
         m.decline();
+        m.render();
         logData[m.key] = false;
       }
       this.loggerService.write(logData, true);
@@ -90,6 +91,7 @@ export class AreanetCookiebanner {
       m.accept();
       logData[m.key] = true;
     }
+
     this.loggerService.write(logData, false);
     this.doShowBanner = 0;
     this.doShowSettings = false;
@@ -110,7 +112,7 @@ export class AreanetCookiebanner {
 
   acceptChoosen(){
     var logData = {'tech': true};
-    const checkboxes = this.el.shadowRoot.querySelectorAll('.checkbox-module');
+    const checkboxes = this.el.shadowRoot.querySelectorAll('.an-checkbox-module');
     [].forEach.call(checkboxes, (c) => {
       for(const m of this.modules){
         
@@ -131,6 +133,11 @@ export class AreanetCookiebanner {
     window.location.reload();
   }
 
+  @Method()
+  async openBanner() {
+    this.doShowSettings = true;
+    this.doShowBanner   = 0;
+  }
 
   openDataPrivacy(){
     document.location.href = this.privacyUrl;
@@ -139,42 +146,42 @@ export class AreanetCookiebanner {
   render() {
       return <Host>
         <div class="link" onClick={() => this.toggleSettings()}><slot/></div>
-          <div class="modal-container" style={{ display: this.showBanner()  ? 'block' : 'none' }}>
-            <div class="modal-header">
+          <div class="an-modal-container" style={{ display: this.showBanner()  ? 'block' : 'none' }}>
+            <div class="an-modal-header">
               <h2>Cookie- und Tracking-Einstellungen</h2>
               <p>Kostenloser Cookie-Banner powered by <a href="https://www.area-net.de">AREA-NET GmbH</a></p>
             </div>
-            <div class="modal-body" style={{ display: this.doShowSettings  ? 'none' : 'block' }}>
+            <div class="an-modal-body" style={{ display: this.doShowSettings  ? 'none' : 'block' }}>
               {this.description}
               <span style={{ display: this.isMinimal  ? 'none' : 'inline' }}> {this.descriptionExtended}</span>    
             </div>
-            <div class="modal-body settings" style={{ display: this.doShowSettings  ? 'block' : 'none' }}>
-              <label class="settings-row">
-                <div class="label">
+            <div class="an-modal-body an-settings" style={{ display: this.doShowSettings  ? 'block' : 'none' }}>
+              <label class="an-settings-row">
+                <div class="an-label">
                   <div>
                     <b>Techisch notwendige</b><br/>
-                    <span class="description">{this.description}</span>
+                    <span class="an-description">{this.description}</span>
                   </div>
-                  <div class="notes">
-                    <div class="notes-header" onClick={(event)=>this.toogleCookies(-1, event)}>
-                      <div class="notes-toogle"> <b>Cookies</b></div>
+                  <div class="an-notes">
+                    <div class="an-notes-header" onClick={(event)=>this.toogleCookies(-1, event)} >
+                      <div class="an-notes-toogle"> <b>Cookies</b></div>
                       <div style={{ display: this.showCookieNote(-1) ? 'block' : 'none' }}><b>Bemerkung</b></div>
                       <div style={{ display: this.showCookieNote(-1)  ? 'block' : 'none' }}><b>Gültigkeit</b></div>
                     </div>
                     <div onClick={(event)=>this.toogleCookies(-1, event)}>
-                      <div class="notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
-                        <div class="first"><span>areanet-cookiebanner-consent</span></div>
+                      <div class="an-notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
+                        <div class="an-first"><span>areanet-cookiebanner-consent</span></div>
                         <div>Cookie-Einstellungen</div>
                         <div>1 Jahr</div>
                       </div>
-                      <div class="notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
-                        <div class="first"><span>areanet-cookiebanner-protect</span></div>
+                      <div class="an-notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
+                        <div class="an-first"><span>areanet-cookiebanner-protect</span></div>
                         <div>Cookie-Einstellungen</div>
                         <div>temporär</div>
                       </div>
                       {this.cookiesRequired.map((c) => {
-                          return <div class="notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
-                            <div class="first"><span>{c.name}</span></div>
+                          return <div class="an-notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
+                            <div class="an-first"><span>{c.name}</span></div>
                             <div>{c.note}</div>
                             <div>{c.lifetime}</div>
                           </div>
@@ -183,43 +190,43 @@ export class AreanetCookiebanner {
                   </div>    
                 </div>            
                 <div>
-                  <input id="req" type="checkbox" class="checkbox" disabled checked/>
-                  <div class="checbox-mark">&#10004;</div>
+                  <input id="req" type="checkbox" class="an-checkbox" disabled checked/>
+                  <div class="an-checbox-mark">&#10004;</div>
                 </div>
               </label>
               {this.modules.map((m, index) => {
-                return <label class="settings-row">
-                  <div class="label" key={index}>
+                return <label class="an-settings-row">
+                  <div class="an-label" key={index}>
                     <div>
                       <b>{m.label}</b><br/>
                     
-                      <span class="description">{m.description}</span>
+                      <span class="an-description">{m.description}</span>
                     </div>
-                    <div class="notes">
-                    <div class="notes-header" onClick={(event)=>this.toogleCookies(index, event)} style={{ display: m.useExternalSource  ? 'flex' : 'none' }}>
-                        <div class="notes-toogle external"> Dieser Dienst bindet ein externes Skript des Anbieters auf der Website ein.</div>
+                    <div class="an-notes">
+                    <div class="an-notes-header" onClick={(event)=>this.toogleCookies(index, event)} style={{ display: m.useExternalSource  ? 'flex' : 'none' }}>
+                        <div class="an-notes-toogle an-external"> Dieser Dienst bindet ein externes Skript des Anbieters auf der Website ein.</div>
                       </div>
-                      <div class="notes-header" onClick={(event)=>this.toogleCookies(index, event)}>
-                        <div class="notes-toogle"> <b>Cookies</b></div>
+                      <div class="an-notes-header" onClick={(event)=>this.toogleCookies(index, event)} style={{ display: m.cookiesOptional.length > 0 ? 'flex' : 'none' }}>
+                        <div class="an-notes-toogle"> <b>Cookies</b></div>
                         <div style={{ display: this.showCookieNote(index) ? 'block' : 'none' }}><b>Bemerkung</b></div>
                         <div style={{ display: this.showCookieNote(index)  ? 'block' : 'none' }}><b>Gültigkeit</b></div>
                       </div>
                   
                       <div onClick={(event)=>this.toogleCookies(index, event)}>
                         {m.cookiesOptional.map((c) => {
-                          return <div class="notes-list"  style={{ display: this.showCookieNote(index)  ? 'flex' : 'none' }}>
-                            <div class="first"><span>{c.name}</span></div>
+                          return <div class="an-notes-list"  style={{ display: this.showCookieNote(index)  ? 'flex' : 'none' }}>
+                            <div class="an-first"><span>{c.name}</span></div>
                             <div>{c.note}</div>
                             <div>{c.lifetime}</div>
                           </div>
                         })}
                       </div>
-                      <div class="notes-header"  onClick={(event)=>this.toogleVendor(index, event)}>
-                        <div class="notes-toogle vendor"> <b>Anbieter</b></div>
+                      <div class="an-notes-header"  onClick={(event)=>this.toogleVendor(index, event)}>
+                        <div class="an-notes-toogle an-vendor"> <b>Anbieter</b></div>
                       </div>
                       <div  onClick={(event)=>this.toogleVendor(index, event)}>
-                        <div class="notes-list" style={{ display: this.showVendorNote(index)  ? 'flex' : 'none' }}>
-                          <div class="first"><span>{m.vendor}</span></div>
+                        <div class="an-notes-list" style={{ display: this.showVendorNote(index)  ? 'flex' : 'none' }}>
+                          <div class="an-first"><span>{m.vendor}</span></div>
                           <div><a href={m.privacyUrl}>Datenschutzerklärung</a></div>
                         </div>
                       </div>
@@ -227,29 +234,29 @@ export class AreanetCookiebanner {
 
                   </div>
                   <div>
-                    <input id={m.key} key={m.key} class="checkbox checkbox-module" type="checkbox" checked={m.isAccept()} />
-                    <div class="checbox-mark">&#10004;</div>
+                    <input id={m.key} key={m.key} class="an-checkbox an-checkbox-module" type="checkbox" checked={m.isAccept()} />
+                    <div class="an-checbox-mark">&#10004;</div>
                   </div>
                 </label>  
               })}  
             
             </div>
             
-            <div class="modal-footer"  style={{ display: this.doShowSettings ? 'flex' : 'none' }} >
-              <button class="secondary" onClick={() => this.toggleSettings()}>Einstellungen schließen</button>
-              <button class="secondary" style={{ display: this.isMinimal ? 'none' : 'inline-block' }} onClick={() => this.acceptChoosen()}>Auswahl speichern</button>
-              <button class="primary" style={{ display: this.isMinimal ? 'none' : 'inline-block' }} onClick={() => this.acceptAll()}>Alle erlauben</button>
+            <div class="an-modal-footer"  style={{ display: this.doShowSettings ? 'flex' : 'none' }} >
+              <button class="an-secondary" onClick={() => this.toggleSettings()}>Einstellungen schließen</button>
+              <button class="an-secondary" style={{ display: this.isMinimal ? 'none' : 'inline-block' }} onClick={() => this.acceptChoosen()}>Auswahl speichern</button>
+              <button class="an-primary" style={{ display: this.isMinimal ? 'none' : 'inline-block' }} onClick={() => this.acceptAll()}>Alle erlauben</button>
             </div>
-            <div class="modal-footer"  style={{ display: this.doShowBanner == 1 ? 'flex' : 'none' }} >
-            <button class="secondary" onClick={() => this.toggleSettings()}>Einstellungen</button>
-              <button class="primary" onClick={() => this.acceptAll()}>Ok, das habe ich verstanden.</button>
+            <div class="an-modal-footer"  style={{ display: this.doShowBanner == 1 ? 'flex' : 'none' }} >
+            <button class="an-secondary" onClick={() => this.toggleSettings()}>Einstellungen</button>
+              <button class="an-primary" onClick={() => this.acceptAll()}>Ok, das habe ich verstanden.</button>
             </div>
-            <div class="modal-footer"  style={{ display: this.doShowBanner == 2 ? 'flex' : 'none' }} >
-              <button class="secondary" onClick={() => this.toggleSettings()}>Einstellungen</button>
-              <button class="secondary" onClick={() => this.acceptRequired()}>Nur notwendige erlauben</button>
-              <button class="primary"  onClick={() => this.acceptAll()}>Alle erlauben</button>
+            <div class="an-modal-footer"  style={{ display: this.doShowBanner == 2 ? 'flex' : 'none' }} >
+              <button class="an-secondary" onClick={() => this.toggleSettings()}>Einstellungen</button>
+              <button class="an-secondary" onClick={() => this.acceptRequired()}>Nur notwendige erlauben</button>
+              <button class="an-primary"  onClick={() => this.acceptAll()}>Alle erlauben</button>
             </div>
-            <div class="modal-body privacy" >
+            <div class="an-modal-body an-privacy" >
               <p>
                 <a style={{ display: this.privacyUrl ? 'inline' : 'none' }} href={this.privacyUrl}>Datenschutzerklärung</a>  
                 <span style={{ display: (this.privacyUrl && this.imprintUrl) ? 'inline' : 'none' }}> | </span>

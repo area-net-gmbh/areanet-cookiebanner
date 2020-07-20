@@ -5,6 +5,7 @@
 - Wird kein externes Modul (z.B. Google Analytics genutzt), wird ein reiner Info-Banner angezeigt
 - Folgende Module und Anbieter werden aktuelle untersützt. Die entsprechenden Codes werden dynamisch bei Aktivierung durch den Benutzer eingebunden:
   - Google Analytics
+  - Google Maps
   - Facebook Pixel
 - Third-Party Cookies, nicht technisch-notwendige Cookies und externe Skripte der obigen Anbieter werden erst nach der Zustimmung durch den Benutzer eingebunden
   - Sollte im Browser Javascript deaktiviert sein, werden diese Cookies und externe Skripte nicht eingebunden
@@ -44,7 +45,19 @@
 
 Es wird empfohlen den Wert SECURE_KEY in der Datei *areanet-cookiebanner/api/index.php* individuell abzuändern, empfohlen wird eine Länge von 32 Zeichen. Mit diesem Key werden die Daten in der Datenbank verschlüsselt abgelegt. Für die spätere Entschlüsselung ist zwingend wieder dieser Key zu verwenden.
 
-### Attribute
+### Javascript-API
+
+### openBanner()
+Öffnet die Einstellungen des Cookie-Banners.
+
+```
+<areanet-cookiebanner id="cookie-banner" module-gmap="loadMap" >Cookie-Einstellungen</areanet-cookiebanner>
+<script>
+  document.getElementById('cookie-banner').openBanner();
+</script>
+```
+
+### HTML-Attribute
 
 Alle Attribute sind optional. Das Setzen von Impressum und Datenschutzerklärung wird empfohlen, da die normalen Links eventuell vom Banner überdeckt sein könnten.
 
@@ -53,6 +66,7 @@ Alle Attribute sind optional. Das Setzen von Impressum und Datenschutzerklärung
 | cookies | Name1,Beschreibung1,Laufzeit1;Name2,... | phpsessid,Session,temporär | Fügt eingesetzte technisch notwendige Cookie bei der Auflistung dieser Cookies im Banner hinzu. Name, Beschreibung und Laufzeit pro Cookie kommagetrennt, mehrere Cookies können per Semikolen erfasst werden. |
 | module-fb | Facebook Pixel-ID | | |
 | module-ga | Google Analytics-ID | | |
+| module-gmap | Callback-Funktion | initMap(isEnabled) | Die Funktion wird aufgerufen, wenn der Benutzer der Nutzung von Google Maps zugestimmt hat. Als Parameter wird ein Bool-Wert übergeben, ob der Benutzer zugestimmt hat oder nicht. |
 | imprint-url | URL | impressum.html | Pfad/URL zur Impressumsseite |
 | privacy-url | URL | datenschutz.html | Pfad/URL zur Datenschutzseite |
 
@@ -78,6 +92,76 @@ CSS-Anpassungen können über CSS-Variable durchgeführt werden.
 - --areanet-cookiebanner-color-secondary-text *(Schriftfarbe der normalen Buttons)*
 - --areanet-cookiebanner-font-family *(Schriftart)*
 - --areanet-cookiebanner-font-size *(Schriftgröße des Textes, Headlines etc. werden automatisch angepasst)*
+
+## Beispiele
+
+### Google Maps Einbindung
+
+```
+<areanet-cookiebanner id="cookie-banner" module-gmap="loadMap" >Cookie-Einstellungen</areanet-cookiebanner>
+...
+<div id="no-maps">
+  <p><b>Google Maps ist deaktiviert</b><br>
+    Aktivieren Sie Google Maps in den Cookie Einstellungen, um die Karte anzeigen zu lassen.
+  </p>
+  <button id="btn-cookie-banner">Cookie-Einstellungen öffnen</button>
+</div>
+...
+<script type="text/javascript">
+  var map;
+  
+  window.loadMap = function(isEnabled){
+    if(isEnabled){
+      var script = document.createElement('script');
+      script.src = 'https://maps.googleapis.com/maps/api/js?key=GOOGLE_API_KEY&callback=initMap';
+      script.defer = true;
+      script.async = true;
+      document.head.appendChild(script);
+    }else{
+      document.getElementById('no-maps').style.display = 'block';
+    }
+    
+  }
+  
+  window.initMap = function() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: LAT, lng: LNG},
+        zoom: 15
+    });
+    var marker = new google.maps.Marker({
+        position: partnerLocation,
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: "Name de Pins",
+        label: {
+            color: '#d8232a',
+            fontWeight: 'bold',
+            text: "Name de Pins",
+        },
+        icon: {
+            labelOrigin: new google.maps.Point(25, -15),
+            url: '/images/marker_red.png',
+            size: new google.maps.Size(22, 40),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(11, 40),
+        }
+    });
+  };
+
+  document.getElementById('btn-cookie-banner').addEventListener('click', function(){
+    document.getElementById('cookie-banner').openBanner(); 
+  });
+  
+</script>
+```
+
+## Entwicklung
+
+- Die Entwicklung basiert auf Stencil.js
+- Starten des Testservers
+  - npm start
+- Erstellen eines Release-Builds
+  - npm run release  
 
 ## Lizenz
 

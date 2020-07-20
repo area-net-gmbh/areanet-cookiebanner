@@ -10,6 +10,7 @@ export namespace Components {
         "cookies": string;
         "gaeProperty": number;
         "imprintUrl": string;
+        "openBanner": () => Promise<void>;
         "privacyUrl": string;
         "thirdparty": string;
     }

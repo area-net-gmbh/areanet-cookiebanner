@@ -61,6 +61,19 @@
 | `thirdparty`  | `thirdparty`   |             | `string` | `undefined` |
 
 
+## Methods
+
+### `openBanner() => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

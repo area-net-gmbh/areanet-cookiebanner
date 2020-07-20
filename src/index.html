@@ -9,21 +9,29 @@
   <script nomodule src="/build/areanet-cookiebanner.js"></script>
   <style>
    
-
-    *{
-      font-size:10px;
-    }
     
   </style>
 </head>
 <body>
-  <h1>Test</h1>
+  <h1 id="test">Test</h1>
   <ul>
     <li><a href="">Impressum</a></li>
     <li><a href="">Datenschutz</a></li>
-    <li><areanet-cookiebanner module-ga="UAE-32323-2323" cookies="phpsessid,Session,temporär" module-fb="FB-ID" imprint-url="impressum.html" privacy-url="/datenschutz.html">Cookie-Einstellungen</areanet-cookiebanner></li>
+    <li><areanet-cookiebanner id="acb" module-ga="UAE-32323-2323" module-gmap="renderMaps" cookies="phpsessid,Session,temporär" module-fb="FB-ID" imprint-url="impressum.html" privacy-url="/datenschutz.html">Cookie-Einstellungen</areanet-cookiebanner></li>
   </ul>
-  
+  <script>
+    window.renderMaps = function(){
+      console.log("test");
+      window.test();
+    }
+
+    window.test = function(){
+      console.log("test 2");
+    }
+    document.getElementById('test').addEventListener('click', function(){
+      document.getElementById('acb').openBanner(); 
+    });
+  </script>
 
 </body>
 </html>

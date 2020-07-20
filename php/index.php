@@ -1,5 +1,17 @@
 <?php
 
+define('SECURE_KEY', 'efLbFK5:?.,HRM\^u/+VHB6WUhuSsHu&');
+
+
+
+
+
+/**
+ * 
+ * AUDIT-LOG FOR AREANET COOKIEBANNER
+ * 
+ */
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header($_SERVER["SERVER_PROTOCOL"]." 405 Method Not Allowed", true, 405);
     exit;
@@ -23,4 +35,39 @@ foreach($cookiesRaw as $cookieName => $cookieValue){
     $cookies[filter_var($cookieName, FILTER_SANITIZE_STRING)] = $cookieValue == 'true' ? true : false;
 }
 
-echo $areaneCookiebannerProtect." == ".$_COOKIE['areanet-cookiebanner-protect'];
+if($areaneCookiebannerProtect != $_COOKIE['areanet-cookiebanner-protect']){
+    header($_SERVER["SERVER_PROTOCOL"]." 401 Unauthorized", true, 405);
+    exit;
+}
+
+$startup = $startup == 'true' || $startup == 'TRUE' ? 1 : 0;
+
+$db = new SQLite3('.htstore');
+$db-> exec("
+    CREATE TABLE IF NOT EXISTS audit(
+        id INTEGER PRIMARY KEY AUTOINCREMENT, 
+        uid TEXT NOT NULL,
+        userAgent TEXT NOT NULL,
+        timestamp TEXT NOT NULL,
+        startup INTEGER NO NULL,
+        cookies TEXT NOT NULL
+    )
+");
+
+if(function_exists('mcrypt_encrypt')) {
+    $iv_size    = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB); 
+    $iv         = mcrypt_create_iv($iv_size, MCRYPT_RAND); 
+    
+    $userAgent  = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, SECURE_KEY, $userAgent, MCRYPT_MODE_ECB, $iv));
+    $cookies    = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, SECURE_KEY, json_encode($cookies), MCRYPT_MODE_ECB, $iv));
+}else{
+    $cookies    = json_encode($cookies);
+}
+
+$statement = "
+INSERT INTO audit 
+    (uid, userAgent, timestamp, startup, cookies) 
+VALUES 
+    ('".$db->escapeString($uid)."', '".$db->escapeString($userAgent)."', '".$db->escapeString($timestamp)."', '".$startup."', '".$db->escapeString($cookies)."')";
+
+$db->exec($statement);

@@ -43,6 +43,7 @@ export class GaModule extends Module{
 
     render(){
         if(!this.isAccept()) return;
+        
         var currdate : any = new Date();
 
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
