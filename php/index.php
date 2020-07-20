@@ -1,9 +1,11 @@
 <?php
 
-define('SECURE_KEY', 'efLbFK5:?.,HRM\^u/+VHB6WUhuSsHu&');
+if(file_exists('../../areanet-cookiebanner.php')){
+    include_once('../../areanet-cookiebanner.php');
+}
 
-
-
+$secureKey = defined('ANCB_SECURE_KEY') ? ANCB_SECURE_KEY : 'efLbFK5:?.,HRM\^u/+VHB6WUhuSsHu&';
+$dbPath    = defined('ANCB_DB_PATH')  ? ANCB_DB_PATH : '.htstore';
 
 
 /**
@@ -42,7 +44,7 @@ if($areaneCookiebannerProtect != $_COOKIE['areanet-cookiebanner-protect']){
 
 $startup = $startup == 'true' || $startup == 'TRUE' ? 1 : 0;
 
-$db = new SQLite3('.htstore');
+$db = new SQLite3($dbPath);
 $db-> exec("
     CREATE TABLE IF NOT EXISTS audit(
         id INTEGER PRIMARY KEY AUTOINCREMENT, 
@@ -58,8 +60,8 @@ if(function_exists('mcrypt_encrypt')) {
     $iv_size    = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB); 
     $iv         = mcrypt_create_iv($iv_size, MCRYPT_RAND); 
     
-    $userAgent  = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, SECURE_KEY, $userAgent, MCRYPT_MODE_ECB, $iv));
-    $cookies    = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, SECURE_KEY, json_encode($cookies), MCRYPT_MODE_ECB, $iv));
+    $userAgent  = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $secureKey, $userAgent, MCRYPT_MODE_ECB, $iv));
+    $cookies    = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $secureKey, json_encode($cookies), MCRYPT_MODE_ECB, $iv));
 }else{
     $cookies    = json_encode($cookies);
 }

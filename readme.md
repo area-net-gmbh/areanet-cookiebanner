@@ -6,6 +6,7 @@
 - Folgende Module und Anbieter werden aktuelle untersützt. Die entsprechenden Codes werden dynamisch bei Aktivierung durch den Benutzer eingebunden:
   - Google Analytics
   - Google Maps
+  - Youtube Videos
   - Facebook Pixel
 - Third-Party Cookies, nicht technisch-notwendige Cookies und externe Skripte der obigen Anbieter werden erst nach der Zustimmung durch den Benutzer eingebunden
   - Sollte im Browser Javascript deaktiviert sein, werden diese Cookies und externe Skripte nicht eingebunden
@@ -43,7 +44,16 @@
 
 ### PHP-Skript
 
-Es wird empfohlen den Wert SECURE_KEY in der Datei *areanet-cookiebanner/api/index.php* individuell abzuändern, empfohlen wird eine Länge von 32 Zeichen. Mit diesem Key werden die Daten in der Datenbank verschlüsselt abgelegt. Für die spätere Entschlüsselung ist zwingend wieder dieser Key zu verwenden.
+Standardmäßig wird eine Default-Schlüssel zur Verschlüsselung der DB-Einträge (wenn PHP-Bibliothek mcrypt verfügbar ist) und *api/.htstore* als SQLite-Datenbankpfad verwendet. Es ist zu empfehlen beide Werte anzupassen und die Datenbank außerhalb des Ordners *areanet-cookiebanner* abzuspeichern.
+
+Um die Werte anzupassen muss außerhalb des Ordners *areanet-cookiebanner* auf der gleichen Ebene ein Skript mit dem Namen *areanet-cookiebanner.php* mit folgende Inhalt erstellt werden:
+
+```
+define('ANCB_SECURE_KEY', 'neuer-key-moeglichst-32-stellen);
+define('ANCB_DB_PATH', 'pfad-und-name-der-sqlite-db);
+```
+
+Der DB-Pfad ist absolut oder relativ zum Skript *areanet-cookiebanner/api/index.php* anzugeben.
 
 ### Javascript-API
 
@@ -67,6 +77,7 @@ Alle Attribute sind optional. Das Setzen von Impressum und Datenschutzerklärung
 | module-fb | Facebook Pixel-ID | | |
 | module-ga | Google Analytics-ID | | |
 | module-gmap | Callback-Funktion | initMap(isEnabled) | Die Funktion wird aufgerufen, wenn der Benutzer der Nutzung von Google Maps zugestimmt hat. Als Parameter wird ein Bool-Wert übergeben, ob der Benutzer zugestimmt hat oder nicht. |
+| module-yt | Callback-Funktion | initYoutube(isEnabled) | Die Funktion wird aufgerufen, wenn der Benutzer der Nutzung von Youtube zugestimmt hat. Als Parameter wird ein Bool-Wert übergeben, ob der Benutzer zugestimmt hat oder nicht. |
 | imprint-url | URL | impressum.html | Pfad/URL zur Impressumsseite |
 | privacy-url | URL | datenschutz.html | Pfad/URL zur Datenschutzseite |
 
@@ -100,11 +111,13 @@ CSS-Anpassungen können über CSS-Variable durchgeführt werden.
 ```
 <areanet-cookiebanner id="cookie-banner" module-gmap="loadMap" >Cookie-Einstellungen</areanet-cookiebanner>
 ...
-<div id="no-maps">
-  <p><b>Google Maps ist deaktiviert</b><br>
-    Aktivieren Sie Google Maps in den Cookie Einstellungen, um die Karte anzeigen zu lassen.
-  </p>
-  <button id="btn-cookie-banner">Cookie-Einstellungen öffnen</button>
+<div id="map">
+  <div id="no-maps">
+    <p><b>Google Maps ist deaktiviert</b><br>
+      Aktivieren Sie Google Maps in den Cookie Einstellungen, um die Karte anzeigen zu lassen.
+    </p>
+    <button id="btn-cookie-banner">Cookie-Einstellungen öffnen</button>
+  </div>
 </div>
 ...
 <script type="text/javascript">
@@ -152,6 +165,32 @@ CSS-Anpassungen können über CSS-Variable durchgeführt werden.
     document.getElementById('cookie-banner').openBanner(); 
   });
   
+</script>
+```
+
+### Youtube Einbindung
+
+```
+<iframe style="display:none;" data-src="https://www.youtube-nocookie.com/embed/VIDEO_ID" allowfullscreen="" class="youtube embed-responsive-item" allow="fullscreen"></iframe>
+<div style="display:none;" class="no-youtube">Youtube ist deaktiviert.</div>
+...
+<areanet-cookiebanner id="cookie-banner" module-yt="loadYoutube" >Cookie-Einstellungen</areanet-cookiebanner>
+...
+<script>
+
+  window.loadYoutube = function(isEnabled){
+    if(isEnabled){
+      for(let el of document.getElementsByClassName('.youtube')){
+        el.setAttribute('src', el.getAttribute('data-src'));
+        el.style.display = 'block';
+      }
+    }else{
+      for(let el of document.getElementsByClassName('.no-youtube')){
+        el.style.display = 'block';
+      }
+    }
+  }
+
 </script>
 ```
 
