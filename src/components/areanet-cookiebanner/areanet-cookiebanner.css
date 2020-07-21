@@ -1,7 +1,7 @@
 
 :host {
   display: inline-block;
-  cursor: pointer;
+ 
   --areanet-cookiebanner-default-font-family: Arial;
   --areanet-cookiebanner-default-font-size: 16px;
   --areanet-cookiebanner-default-color-background: #252838;
@@ -12,7 +12,7 @@
   --areanet-cookiebanner-default-color-secondary-text: var(--areanet-cookiebanner-default-color-text);
 
   --font-size: var(--areanet-cookiebanner-font-size, var(--areanet-cookiebanner-default-font-size));
-
+  cursor: pointer;
   font-size:var(--font-size);
 }
 
@@ -21,7 +21,7 @@
 }
 
 .an-modal-container{
- 
+  cursor: default;
   background-color: var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-default-color-background));
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
@@ -34,7 +34,9 @@
   z-index: 999999;
 }
 
-
+.an-disabled{
+  opacity: 0.5;
+}
 
 .an-modal-header, .an-modal-header *{
   color: var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
@@ -130,6 +132,11 @@ button.an-secondary:hover{
 .an-label{
   all: unset;
   flex:1 auto;
+  
+}
+
+.an-cursor{
+  cursor:pointer;
 }
 
 .an-description{
@@ -204,6 +211,7 @@ button.an-secondary:hover{
 .an-notes-header div{
   all: unset;
   flex: 1 auto;
+  width: 30%;
 }
 
 .an-notes-header,

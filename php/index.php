@@ -7,6 +7,10 @@ if(file_exists('../../areanet-cookiebanner.php')){
 $secureKey = defined('ANCB_SECURE_KEY') ? ANCB_SECURE_KEY : 'efLbFK5:?.,HRM\^u/+VHB6WUhuSsHu&';
 $dbPath    = defined('ANCB_DB_PATH')  ? ANCB_DB_PATH : '.htstore';
 
+if(!is_dir(dirname($dbPath))){
+    header($_SERVER["SERVER_PROTOCOL"]." 500 Database path not exists", true, 405);
+    die("500 Database path not exists: ".dirname($dbPath));
+}
 
 /**
  * 

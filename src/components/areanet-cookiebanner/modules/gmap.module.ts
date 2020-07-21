@@ -29,6 +29,8 @@ export class GmapModule extends Module{
     }
 
     render(){
-        (window as any)[this.data](this.isAccept());
+        if(typeof (window as any)[this.data] === 'function'){
+            (window as any)[this.data](this.isAccept());
+        }
     }
 }

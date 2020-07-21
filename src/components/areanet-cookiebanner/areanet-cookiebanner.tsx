@@ -4,6 +4,7 @@ import { Module } from './modules/module';
 import { CookieService } from './services/cookie.service';
 import { CookieInterface } from './interfaces/cookie.interface';
 import { LoggerService } from './services/logger.service';
+import { UuidService } from './services/uuid.service';
 
 @Component({
   tag: 'areanet-cookiebanner',
@@ -18,6 +19,7 @@ export class AreanetCookiebanner {
   modules : Module[] = [];
   
   doShowBannerStore: number = 0;
+  uuidService : UuidService = new UuidService();
 
   @Element() el: HTMLElement;
   @Prop() thirdparty: string;
@@ -84,9 +86,10 @@ export class AreanetCookiebanner {
 
   }
 
-  acceptAll(){
+  async acceptAll(){
     var logData = {'tech': true};
-    this.cookieService.set(this.cookieConsentName);
+    const uuid = await this.uuidService.generate();
+    this.cookieService.set(this.cookieConsentName, uuid);
     for(const m of this.modules){
       m.accept();
       logData[m.key] = true;
@@ -98,19 +101,20 @@ export class AreanetCookiebanner {
     window.location.reload();
   }
 
-  acceptRequired(){
+  async acceptRequired(){
     var logData = {'tech': true};
     for(const m of this.modules){
       m.decline();
       logData[m.key] = false;
     }
     this.loggerService.write(logData, false);
-    this.cookieService.set(this.cookieConsentName);
+    const uuid = await this.uuidService.generate();
+    this.cookieService.set(this.cookieConsentName, uuid);
     this.doShowBanner = 0;
   }
 
 
-  acceptChoosen(){
+  async acceptChoosen(){
     var logData = {'tech': true};
     const checkboxes = this.el.shadowRoot.querySelectorAll('.an-checkbox-module');
     [].forEach.call(checkboxes, (c) => {
@@ -128,7 +132,8 @@ export class AreanetCookiebanner {
       };
     });
     this.loggerService.write(logData, false);
-    this.cookieService.set(this.cookieConsentName);
+    const uuid = await this.uuidService.generate();
+    this.cookieService.set(this.cookieConsentName, uuid);
     this.doShowSettings = false;
     window.location.reload();
   }
@@ -149,7 +154,7 @@ export class AreanetCookiebanner {
           <div class="an-modal-container" style={{ display: this.showBanner()  ? 'block' : 'none' }}>
             <div class="an-modal-header">
               <h2>Cookie- und Tracking-Einstellungen</h2>
-              <p>Kostenloser Cookie-Banner powered by <a href="https://www.area-net.de">AREA-NET GmbH</a></p>
+              <p>Version 1.2.1 - kostenloser Cookie-Banner powered by <a href="https://www.area-net.de">AREA-NET GmbH</a></p>
             </div>
             <div class="an-modal-body" style={{ display: this.doShowSettings  ? 'none' : 'block' }}>
               {this.description}
@@ -159,7 +164,7 @@ export class AreanetCookiebanner {
               <label class="an-settings-row">
                 <div class="an-label">
                   <div>
-                    <b>Techisch notwendige</b><br/>
+                    <b>Technisch notwendige</b><br/>
                     <span class="an-description">{this.description}</span>
                   </div>
                   <div class="an-notes">
@@ -189,7 +194,7 @@ export class AreanetCookiebanner {
                     </div>
                   </div>    
                 </div>            
-                <div>
+                <div class="an-disabled">
                   <input id="req" type="checkbox" class="an-checkbox" disabled checked/>
                   <div class="an-checbox-mark">&#10004;</div>
                 </div>
@@ -197,7 +202,7 @@ export class AreanetCookiebanner {
               {this.modules.map((m, index) => {
                 return <label class="an-settings-row">
                   <div class="an-label" key={index}>
-                    <div>
+                    <div class="an-cursor">
                       <b>{m.label}</b><br/>
                     
                       <span class="an-description">{m.description}</span>
@@ -233,7 +238,7 @@ export class AreanetCookiebanner {
                     </div>
 
                   </div>
-                  <div>
+                  <div class="an-cursor">
                     <input id={m.key} key={m.key} class="an-checkbox an-checkbox-module" type="checkbox" checked={m.isAccept()} />
                     <div class="an-checbox-mark">&#10004;</div>
                   </div>

@@ -4,7 +4,7 @@ export class CookieService{
         var expired = new Date();
         expired.setFullYear(expired.getFullYear() - 100);
 
-        var deleteC = name + "=; expires=" + expired.toUTCString() + (domain ? '; domain=' + domain : '') + (path ? '; path=' + path : '');
+        var deleteC = name + "=; expires=" + expired.toUTCString() + (domain ? '; domain=' + domain : '') + (path ? '; path=' + path : '; path=/');
         document.cookie = deleteC;
     }
 
@@ -32,7 +32,7 @@ export class CookieService{
             expired.setFullYear(expired.getFullYear() + 2);
         }
         
-        document.cookie = name + "=" + value + "; expires=" + expired.toUTCString()+'; secure; SameSite=strict';
+        document.cookie = name + "=" + value + "; expires=" + expired.toUTCString()+'; path=/; secure; SameSite=strict';
     }
 
 }
