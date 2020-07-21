@@ -27,6 +27,7 @@ export class AreanetCookiebanner {
   @Prop() privacyUrl: string;
   @Prop() imprintUrl: string;
   @Prop() cookies: string;
+  @Prop() color: string;
 
   @State() isMinimal: boolean = true;
   @State() description: string = 'Für die optimale Anzeige und Funktionsweise unserer Website setzen wir technisch notwendige Cookies und Technologien ein.';
@@ -38,6 +39,8 @@ export class AreanetCookiebanner {
   @State() show : boolean = false;
 
   componentWillLoad(){
+
+    this.color = this.color == 'light' ? 'light' : 'dark';
 
     for(const moduleName in Modules){
       const module : Module = new Modules[moduleName]();
@@ -86,35 +89,38 @@ export class AreanetCookiebanner {
 
   }
 
-  async acceptAll(){
+  acceptAll(){
     var logData = {'tech': true};
-    const uuid = await this.uuidService.generate();
-    this.cookieService.set(this.cookieConsentName, uuid);
-    for(const m of this.modules){
-      m.accept();
-      logData[m.key] = true;
-    }
 
-    this.loggerService.write(logData, false);
-    this.doShowBanner = 0;
-    this.doShowSettings = false;
-    window.location.reload();
-  }
+    this.uuidService.generate().then((uuid) => {
+      this.cookieService.set(this.cookieConsentName, uuid);
+      for(const m of this.modules){
+        m.accept();
+        logData[m.key] = true;
+      }
 
-  async acceptRequired(){
+      this.loggerService.write(logData, false);
+      this.doShowBanner = 0;
+      this.doShowSettings = false;
+      window.location.reload();
+    })
+}
+
+  acceptRequired(){
     var logData = {'tech': true};
     for(const m of this.modules){
       m.decline();
       logData[m.key] = false;
     }
     this.loggerService.write(logData, false);
-    const uuid = await this.uuidService.generate();
-    this.cookieService.set(this.cookieConsentName, uuid);
-    this.doShowBanner = 0;
+    this.uuidService.generate().then((uuid) => {
+      this.cookieService.set(this.cookieConsentName, uuid);
+      this.doShowBanner = 0;
+      window.location.reload();
+    });
   }
 
-
-  async acceptChoosen(){
+  acceptChoosen(){
     var logData = {'tech': true};
     const checkboxes = this.el.shadowRoot.querySelectorAll('.an-checkbox-module');
     [].forEach.call(checkboxes, (c) => {
@@ -132,10 +138,11 @@ export class AreanetCookiebanner {
       };
     });
     this.loggerService.write(logData, false);
-    const uuid = await this.uuidService.generate();
-    this.cookieService.set(this.cookieConsentName, uuid);
-    this.doShowSettings = false;
-    window.location.reload();
+    this.uuidService.generate().then((uuid) => {
+      this.cookieService.set(this.cookieConsentName, uuid);
+      this.doShowSettings = false;
+      window.location.reload();
+    });
   }
 
   @Method()
@@ -151,14 +158,16 @@ export class AreanetCookiebanner {
   render() {
       return <Host>
         <div class="link" onClick={() => this.toggleSettings()}><slot/></div>
-          <div class="an-modal-container" style={{ display: this.showBanner()  ? 'block' : 'none' }}>
+          <div class="an-modal-back"  style={{ display: this.showBanner()  ? 'block' : 'none' }}></div>
+          <div class={'an-modal-container ' + this.color}  style={{ display: this.showBanner()  ? 'block' : 'none' }}>
             <div class="an-modal-header">
               <h2>Cookie- und Tracking-Einstellungen</h2>
-              <p>Version 1.2.1 - kostenloser Cookie-Banner powered by <a href="https://www.area-net.de">AREA-NET GmbH</a></p>
+              <p>Version 1.3.0 - kostenloser Cookie-Banner der <a href="https://www.area-net.de">AREA-NET GmbH</a></p>
             </div>
             <div class="an-modal-body" style={{ display: this.doShowSettings  ? 'none' : 'block' }}>
               {this.description}
               <span style={{ display: this.isMinimal  ? 'none' : 'inline' }}> {this.descriptionExtended}</span>    
+    
             </div>
             <div class="an-modal-body an-settings" style={{ display: this.doShowSettings  ? 'block' : 'none' }}>
               <label class="an-settings-row">

@@ -54,6 +54,7 @@
 
 | Property      | Attribute      | Description | Type     | Default     |
 | ------------- | -------------- | ----------- | -------- | ----------- |
+| `color`       | `color`        |             | `string` | `undefined` |
 | `cookies`     | `cookies`      |             | `string` | `undefined` |
 | `gaeProperty` | `gae-property` |             | `number` | `undefined` |
 | `imprintUrl`  | `imprint-url`  |             | `string` | `undefined` |

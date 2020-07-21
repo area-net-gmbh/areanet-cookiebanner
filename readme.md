@@ -74,6 +74,7 @@ Alle Attribute sind optional. Das Setzen von Impressum und Datenschutzerklärung
 
 | Attribut | Wert/e | Beispiel | Beschreibung |
 | --- | --- | --- | --- |
+| color | Farbschema | light/dark | default=dark |
 | cookies | Name1,Beschreibung1,Laufzeit1;Name2,... | phpsessid,Session,temporär | Fügt eingesetzte technisch notwendige Cookie bei der Auflistung dieser Cookies im Banner hinzu. Name, Beschreibung und Laufzeit pro Cookie kommagetrennt, mehrere Cookies können per Semikolen erfasst werden. |
 | module-fb | Facebook Pixel-ID | | |
 | module-ga | Google Analytics-ID | | |

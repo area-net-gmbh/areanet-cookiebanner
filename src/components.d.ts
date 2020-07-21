@@ -7,6 +7,7 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface AreanetCookiebanner {
+        "color": string;
         "cookies": string;
         "gaeProperty": number;
         "imprintUrl": string;
@@ -28,6 +29,7 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AreanetCookiebanner {
+        "color"?: string;
         "cookies"?: string;
         "gaeProperty"?: number;
         "imprintUrl"?: string;

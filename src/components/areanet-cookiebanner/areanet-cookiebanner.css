@@ -11,6 +11,13 @@
   --areanet-cookiebanner-default-color-secondary:#666666;
   --areanet-cookiebanner-default-color-secondary-text: var(--areanet-cookiebanner-default-color-text);
 
+  --areanet-cookiebanner-light-color-background: #EFEFEF;
+  --areanet-cookiebanner-light-color-text: #252838;
+  --areanet-cookiebanner-light-color-primary:#B60A00;
+  --areanet-cookiebanner-light-color-primary-text: var(--areanet-cookiebanner-light-color-text);
+  --areanet-cookiebanner-light-color-secondary:#666666b6;
+  --areanet-cookiebanner-light-color-secondary-text: var(--areanet-cookiebanner-light-color-text);
+
   --font-size: var(--areanet-cookiebanner-font-size, var(--areanet-cookiebanner-default-font-size));
   cursor: pointer;
   font-size:var(--font-size);
@@ -18,6 +25,16 @@
 
 :host *{
   font-family: var(--areanet-cookiebanner-font-family, var(--areanet-cookiebanner-default-font-family));
+}
+
+.an-modal-back{
+  position: fixed;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  background-color: rgba(0,0,0,0.3);
+  z-index: 8000;
 }
 
 .an-modal-container{
@@ -31,7 +48,11 @@
   width:48%;
   padding:1%;
   text-align: center;
-  z-index: 999999;
+  z-index: 9000;
+}
+
+.an-modal-container.light{
+  background-color: var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-light-color-background));
 }
 
 .an-disabled{
@@ -42,6 +63,12 @@
   color: var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
   font-weight:bold;
   font-size:calc(1.2 * var(--font-size));
+  text-decoration: none;
+}
+
+.an-modal-container.light .an-modal-header,
+.an-modal-container.light .an-modal-header *{
+  color: var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-light-color-text));
 }
 
 .an-modal-header h2,
@@ -63,6 +90,14 @@
   font-weight: normal;
 }
 
+.an-modal-container.light .an-modal-header p,
+.an-modal-container.light .an-modal-header a,
+.an-modal-container.light .an-privacy p,
+.an-modal-container.light .an-privacy a,
+.an-modal-container.light .an-privacy span{
+  color: var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-light-color-secondary));
+}
+
 .an-privacy p{
   margin-top:12px;
   margin-bottom:6px;
@@ -70,12 +105,27 @@
 
 .an-modal-header a:hover,
 .privacy a:hover{
-  color: var(--areanet-cookiebanner-color-ptext, var(--areanet-cookiebanner-default-color-text));
+  color: var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
 }
 
-.an-modal-body, .an-modal-body *{
+.an-modal-container.light .an-modal-header a:hover,
+.an-modal-container.light .privacy a:hover{
+  color: var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
+}
+
+.an-modal-body{
+  padding:0 16px;
+}
+
+.an-modal-body, 
+.an-modal-body *{
   color: var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
   font-size: var(--font-size);
+}
+
+.an-modal-container.light .an-modal-body, 
+.an-modal-container.light .an-modal-body *{
+  color: var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-light-color-text));
 }
 
 .an-modal-body:not(.an-privacy){
@@ -83,7 +133,6 @@
 }
 
 button{
-  all: unset;
   font-size:var(--font-size);
   border:1px solid transparent;
   padding:3px 24px;
@@ -92,47 +141,58 @@ button{
 }
 
 button.an-primary{
-
   background-color: var(--areanet-cookiebanner-color-primary, var(--areanet-cookiebanner-default-color-primary));
   color: var(--areanet-cookiebanner-color-primary-text, var(--areanet-cookiebanner-default-color-primary-text));
 }
+.an-modal-container.light button.an-primary{
+  background-color: var(--areanet-cookiebanner-color-primary, var(--areanet-cookiebanner-light-color-primary));
+  color: var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-light-color-background));
+}
 
 button.an-primary:hover{
-
   border-color:var(--areanet-cookiebanner-color-primary-text, var(--areanet-cookiebanner-default-color-primary-text));
 }
 
-button.an-secondary{
+.an-modal-container.light button.an-primary:hover{
+  border-color:var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-light-color-background));
+}
 
+button.an-secondary{
   background-color: var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-default-color-secondary));
   color: var(--areanet-cookiebanner-color-secondary-text, var(--areanet-cookiebanner-default-color-secondary-text));
+}
+
+.an-modal-container.light button.an-secondary{
+  background-color: var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-light-color-secondary));
+  color: var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-light-color-background));
 }
 
 button.an-secondary:hover{
   border-color:var(--areanet-cookiebanner-color-secondary-text, var(--areanet-cookiebanner-default-color-secondary-text));
 }
 
+.an-modal-container.light button.an-secondary:hover{
+  border-color:var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-light-color-background));
+}
+
 .an-settings{
-  all: unset;
   display:flex;
   flex-direction: column;
   text-align:left;
   max-height:calc(100vh - 260px);
   min-height:80px;
   overflow:auto;
+  overflow-x:hidden;
 }
 
 .an-settings-row{
-  all: unset;
   display:flex;
   flex-direction: row;
   margin-bottom:16px;
 }
 
 .an-label{
-  all: unset;
   flex:1 auto;
-  
 }
 
 .an-cursor{
@@ -140,7 +200,6 @@ button.an-secondary:hover{
 }
 
 .an-description{
-  all: unset;
   font-size:calc(0.8 * var(--font-size));
   margin-bottom:4px;
   margin-top:2px;
@@ -149,7 +208,6 @@ button.an-secondary:hover{
 }
 
 .an-checkbox{
-  all: unset;
   display:none;
 }
 
@@ -159,9 +217,14 @@ button.an-secondary:hover{
   width:20px;
   height:20px;
   background-color:var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-default-color-secondary));
-  color:var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-default-color-secondary));
+  color:transparent;
   border: 1px solid var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
+}
 
+.an-modal-container.light .an-checbox-mark{
+  background-color:var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-light-color-secondary));
+  color:transparent;
+  border: 1px solid var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-light-color-text));
 }
 
 .an-checkbox:checked + .an-checbox-mark{
@@ -170,24 +233,24 @@ button.an-secondary:hover{
   opacity: 1;
 }
 
+.an-modal-container.light .an-checkbox:checked + .an-checbox-mark{
+  background-color:var(--areanet-cookiebanner-color-primary, var(--areanet-cookiebanner-light-color-primary));
+  color:var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-light-color-background));
+}
+
 .an-notes-list,
-.an-notes-header{
-  all: unset;
+.an-notes-header{  
   display:flex;
   flex-direction: row;
 }
 
-
-.an-notes-list .an-first span{
-  all: unset;
+.an-notes-list .an-first span{ 
   padding-left:12px;
 }
 
 .an-notes-header b{
-  all: unset;
   cursor: pointer;
 }
-
 
 .an-notes-toogle::before{
   content: '\2609';
@@ -201,7 +264,6 @@ button.an-secondary:hover{
   content: '\26A0';
 }
 
-
 .an-notes-toogle b{
   text-decoration: underline;
   font-weight: normal;
@@ -209,7 +271,6 @@ button.an-secondary:hover{
 
 .an-notes-list div,
 .an-notes-header div{
-  all: unset;
   flex: 1 auto;
   width: 30%;
 }
@@ -222,8 +283,14 @@ button.an-secondary:hover{
   color: var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-default-color-secondary));
 }
 
+.an-modal-container.light .an-notes-header,
+.an-modal-container.light .an-notes-header *,
+.an-modal-container.light .an-notes-list,
+.an-modal-container.light .an-notes-list *{
+  color: var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-light-color-secondary));
+}
+
 .an-modal-footer {
-  all: unset;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -235,7 +302,6 @@ button.an-secondary:hover{
     left:10%;
   }
 }
-
 
 @media only screen and (max-width: 960px) {
   .an-modal-container {

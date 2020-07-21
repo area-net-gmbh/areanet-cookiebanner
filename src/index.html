@@ -8,16 +8,25 @@
   <script type="module" src="/build/areanet-cookiebanner.esm.js"></script>
   <script nomodule src="/build/areanet-cookiebanner.js"></script>
   <style>
-   
-    
+    :root{
+      --color-test: #FFFFFF;
+    }
+    button{
+      background-color:#FF0000;
+      color:var(--color-test) !important;
+    }
   </style>
 </head>
 <body>
   <h1 id="test">Test</h1>
+  <custom-tag>
+    <button id="test">Mein Button</button>
+  </custom-tag>
+  
   <ul>
     <li><a href="">Impressum</a></li>
     <li><a href="">Datenschutz</a></li>
-    <li><areanet-cookiebanner id="acb" module-ga="UAE-32323-2323" module-gmap="renderMaps2" cookies="phpsessid,Session,temporär" module-fb="FB-ID" imprint-url="impressum.html" privacy-url="/datenschutz.html">Cookie-Einstellungen</areanet-cookiebanner></li>
+    <li><areanet-cookiebanner color="light" id="acb" module-ga="UAE-32323-2323" module-gmap="renderMaps2" cookies="phpsessid,Session,temporär" module-fb="FB-ID" imprint-url="impressum.html" privacy-url="/datenschutz.html">Cookie-Einstellungen</areanet-cookiebanner></li>
   </ul>
   <script>
     window.renderMaps = function(){
