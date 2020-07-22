@@ -21,6 +21,8 @@ export class AreanetCookiebanner {
   doShowBannerStore: number = 0;
   uuidService : UuidService = new UuidService();
 
+  version : string = '1.3.1';
+
   @Element() el: HTMLElement;
   @Prop() thirdparty: string;
   @Prop() gaeProperty: number;
@@ -91,8 +93,10 @@ export class AreanetCookiebanner {
 
   acceptAll(){
     var logData = {'tech': true};
+    console.log("acceptAll");
 
-    this.uuidService.generate().then((uuid) => {
+    if(navigator.userAgent.indexOf('MSIE')!==-1|| navigator.appVersion.indexOf('Trident/') > -1){
+      const uuid = this.uuidService.generate4IE().toString();
       this.cookieService.set(this.cookieConsentName, uuid);
       for(const m of this.modules){
         m.accept();
@@ -103,8 +107,23 @@ export class AreanetCookiebanner {
       this.doShowBanner = 0;
       this.doShowSettings = false;
       window.location.reload();
-    })
-}
+    }else{
+      this.uuidService.generate().then((uuid) => {
+        this.cookieService.set(this.cookieConsentName, uuid);
+        for(const m of this.modules){
+          m.accept();
+          logData[m.key] = true;
+        }
+  
+        this.loggerService.write(logData, false);
+        this.doShowBanner = 0;
+        this.doShowSettings = false;
+        window.location.reload();
+      })
+  }
+    }
+
+    
 
   acceptRequired(){
     var logData = {'tech': true};
@@ -113,11 +132,20 @@ export class AreanetCookiebanner {
       logData[m.key] = false;
     }
     this.loggerService.write(logData, false);
-    this.uuidService.generate().then((uuid) => {
+
+    if(navigator.userAgent.indexOf('MSIE')!==-1|| navigator.appVersion.indexOf('Trident/') > -1){
+      const uuid = this.uuidService.generate4IE().toString();
       this.cookieService.set(this.cookieConsentName, uuid);
       this.doShowBanner = 0;
       window.location.reload();
-    });
+    }else{
+      this.uuidService.generate().then((uuid) => {
+        this.cookieService.set(this.cookieConsentName, uuid);
+        this.doShowBanner = 0;
+        window.location.reload();
+      });
+    }
+   
   }
 
   acceptChoosen(){
@@ -138,11 +166,20 @@ export class AreanetCookiebanner {
       };
     });
     this.loggerService.write(logData, false);
-    this.uuidService.generate().then((uuid) => {
+
+    if(navigator.userAgent.indexOf('MSIE')!==-1|| navigator.appVersion.indexOf('Trident/') > -1){
+      const uuid = this.uuidService.generate4IE().toString();
       this.cookieService.set(this.cookieConsentName, uuid);
       this.doShowSettings = false;
       window.location.reload();
-    });
+    }else{
+      this.uuidService.generate().then((uuid) => {
+        this.cookieService.set(this.cookieConsentName, uuid);
+        this.doShowSettings = false;
+        window.location.reload();
+      });
+    }
+    
   }
 
   @Method()
@@ -162,7 +199,6 @@ export class AreanetCookiebanner {
           <div class={'an-modal-container ' + this.color}  style={{ display: this.showBanner()  ? 'block' : 'none' }}>
             <div class="an-modal-header">
               <h2>Cookie- und Tracking-Einstellungen</h2>
-              <p>Version 1.3.0 - kostenloser Cookie-Banner der <a href="https://www.area-net.de">AREA-NET GmbH</a></p>
             </div>
             <div class="an-modal-body" style={{ display: this.doShowSettings  ? 'none' : 'block' }}>
               {this.description}
@@ -272,10 +308,12 @@ export class AreanetCookiebanner {
             </div>
             <div class="an-modal-body an-privacy" >
               <p>
+                Version {this.version} by <a href="https://www.area-net.de">AREA-NET GmbH</a>
+                <span style={{ display: (this.privacyUrl || this.imprintUrl) ? 'inline' : 'none' }}> | </span>
                 <a style={{ display: this.privacyUrl ? 'inline' : 'none' }} href={this.privacyUrl}>Datenschutzerklärung</a>  
                 <span style={{ display: (this.privacyUrl && this.imprintUrl) ? 'inline' : 'none' }}> | </span>
-                <a style={{ display: this.imprintUrl ? 'inline' : 'none' }} href={this.imprintUrl}>Impressum</a>
-                </p>
+                <a style={{ display: this.imprintUrl ? 'inline' : 'none' }} href={this.imprintUrl}>Impressum</a> 
+              </p>
             </div>
           </div>
         </Host>;

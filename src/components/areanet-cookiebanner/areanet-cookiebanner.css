@@ -15,7 +15,7 @@
   --areanet-cookiebanner-light-color-text: #252838;
   --areanet-cookiebanner-light-color-primary:#B60A00;
   --areanet-cookiebanner-light-color-primary-text: var(--areanet-cookiebanner-light-color-text);
-  --areanet-cookiebanner-light-color-secondary:#666666b6;
+  --areanet-cookiebanner-light-color-secondary:rgba(102, 102, 102, 0.9);
   --areanet-cookiebanner-light-color-secondary-text: var(--areanet-cookiebanner-light-color-text);
 
   --font-size: var(--areanet-cookiebanner-font-size, var(--areanet-cookiebanner-default-font-size));

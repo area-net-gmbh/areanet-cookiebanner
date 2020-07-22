@@ -28,8 +28,34 @@ export class LoggerService{
         return path + '/';
     };
 
+    write(cookies : any, isStartup : boolean = false){
+        if(navigator.userAgent.indexOf('MSIE')!==-1|| navigator.appVersion.indexOf('Trident/') > -1){
+            this.write4IE(cookies, isStartup);
+        }else{
+            this.writeModern(cookies, isStartup);
+        }
+    }
 
-    async write(cookies : any, isStartup : boolean = false){
+    private write4IE(cookies : any, isStartup : boolean = false){
+        
+        var uid = this.uuidService.generate4IE().toString();
+        var randProtectKey = (Math.random() * (999999999999 - 111111111111) + 111111111111).toString();
+
+        var date = new Date();
+        var data = new FormData();
+        data.append(this.cookieProtectName, randProtectKey);
+        data.append('uid', uid);
+        data.append('userAgent', navigator.userAgent);
+        data.append('timestamp', date.toISOString());
+        data.append('cookies', JSON.stringify(cookies));
+        data.append('startup', isStartup ? 'true' : 'false');
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', this.path + 'api/index.php', true);
+        xhr.send(data);
+    }
+
+    private async writeModern(cookies : any, isStartup : boolean = false){
         var array = new Uint32Array(5);
         window.crypto.getRandomValues(array);
 
