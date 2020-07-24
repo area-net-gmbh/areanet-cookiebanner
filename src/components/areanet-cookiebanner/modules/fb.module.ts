@@ -3,10 +3,11 @@ import { Module } from "./module";
 export class FbModule extends Module{
     key: string             = 'fb';
     label: string           = 'Facebook Pixel';
-    description: string     = 'Um unsere Website besser für Sie optimieren zu können, nutzen wir Facebook Pixel zur Analyse. \
-                               Dafür binden wir einen externen Dienst von Facebook ein, der \
-                               Zugriff auf personenbezogene Daten haben und auswerten kann.';
-    cookiesRequired         = [{name: 'fb-disabled', lifetime: '1 Jahr', note: 'Deaktivierung Facebook Pixel'}];
+    description: any       = {
+      de: 'Um unsere Website besser für Sie optimieren zu können, nutzen wir Facebook Pixel zur Analyse. Dafür binden wir einen externen Dienst von Facebook ein, der Zugriff auf personenbezogene Daten haben und auswerten kann.',
+      en: 'To be able to optimize our website better for you, we use Facebook pixels for analysis. For this purpose, we integrate an external Facebook service that can access and evaluate personal data.'
+    };
+    cookiesRequired         = [{name: 'fb-disabled', lifetime: {de: '1 Jahr', en: '1 Year'}, note: {de: 'Deaktivierung Facebook Pixel', en: 'Deactivation of Facebook Pixel'}}];
     privacyUrl              = 'https://www.facebook.com/about/privacy/update';
     vendor                  = 'Facebook Ireland Limited';
     useExternalSource       = true;

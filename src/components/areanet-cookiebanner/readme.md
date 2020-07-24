@@ -13,6 +13,7 @@
 | `cookies`     | `cookies`      |             | `string` | `undefined` |
 | `gaeProperty` | `gae-property` |             | `number` | `undefined` |
 | `imprintUrl`  | `imprint-url`  |             | `string` | `undefined` |
+| `lang`        | `lang`         |             | `string` | `undefined` |
 | `privacyUrl`  | `privacy-url`  |             | `string` | `undefined` |
 | `thirdparty`  | `thirdparty`   |             | `string` | `undefined` |
 

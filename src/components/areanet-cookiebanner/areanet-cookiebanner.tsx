@@ -5,6 +5,7 @@ import { CookieService } from './services/cookie.service';
 import { CookieInterface } from './interfaces/cookie.interface';
 import { LoggerService } from './services/logger.service';
 import { UuidService } from './services/uuid.service';
+import {LANG} from './lang';
 
 @Component({
   tag: 'areanet-cookiebanner',
@@ -21,10 +22,11 @@ export class AreanetCookiebanner {
   doShowBannerStore: number = 0;
   uuidService : UuidService = new UuidService();
 
-  version : string = '1.3.2';
+  version : string = '1.4.0';
 
   @Element() el: HTMLElement;
   @Prop() thirdparty: string;
+  @Prop() lang: string;
   @Prop() gaeProperty: number;
   @Prop() privacyUrl: string;
   @Prop() imprintUrl: string;
@@ -32,17 +34,31 @@ export class AreanetCookiebanner {
   @Prop() color: string;
 
   @State() isMinimal: boolean = true;
-  @State() description: string = 'Für die optimale Anzeige und Funktionsweise unserer Website setzen wir technisch notwendige Cookies und Technologien ein.';
-  @State() descriptionExtended: string = 'Darüberhinaus nutzen wir Analyse-, Tracking und/oder Werbetools, um unsere Dienstleistungen entsprechend optimieren und präsentieren können.';
+  @State() description: any = {
+    'de': 'Für die optimale Anzeige und Funktionsweise unserer Website setzen wir technisch notwendige Cookies und Technologien ein.',
+    'en':'For the optimal display and functionality of our website we use technically necessary cookies and technologies.'};
+  @State() descriptionExtended: any = {
+    'de': 'Darüberhinaus nutzen wir Analyse-, Tracking und/oder Werbetools, um unsere Dienstleistungen entsprechend optimieren und präsentieren können.',
+    'en': 'Furthermore, we use analysis, tracking and/or advertising tools to optimize and present our services accordingly.'};
   @State() doShowBanner: number = 0;
   @State() doShowSettings: boolean = false;
   @State() showCookieNotes: number[] = [];
   @State() showVendorNotes: number[] = [];
   @State() show : boolean = false;
+  
+  translations : any = {};
+
+  title: any = {
+    'de': 'Cookie- und Tracking-Einstellungen',
+    'en': 'Cookie and tracking settings'
+  };
 
   componentWillLoad(){
 
-    this.color = this.color == 'light' ? 'light' : 'dark';
+    this.lang         = this.lang == 'en' ? 'en' : 'de';
+    this.translations = LANG[this.lang];
+
+    this.color        = this.color == 'light' ? 'light' : 'dark';
 
     for(const moduleName in Modules){
       const module : Module = new Modules[moduleName]();
@@ -198,42 +214,42 @@ export class AreanetCookiebanner {
           <div class="an-modal-back"  style={{ display: this.showBanner()  ? 'block' : 'none' }}></div>
           <div class={'an-modal-container ' + this.color}  style={{ display: this.showBanner()  ? 'block' : 'none' }}>
             <div class="an-modal-header">
-              <h2>Cookie- und Tracking-Einstellungen</h2>
+              <h2>{this.translations['title']}</h2>
             </div>
             <div class="an-modal-body" style={{ display: this.doShowSettings  ? 'none' : 'block' }}>
-              {this.description}
-              <span style={{ display: this.isMinimal  ? 'none' : 'inline' }}> {this.descriptionExtended}</span>    
+              {this.translations['description']}
+              <span style={{ display: this.isMinimal  ? 'none' : 'inline' }}> {this.translations['descriptionExtended']}</span>    
     
             </div>
             <div class="an-modal-body an-settings" style={{ display: this.doShowSettings  ? 'block' : 'none' }}>
               <label class="an-settings-row">
                 <div class="an-label">
                   <div>
-                    <b>Technisch notwendige</b><br/>
-                    <span class="an-description">{this.description}</span>
+                    <b>{this.translations['technical']}</b><br/>
+                    <span class="an-description">{this.translations['description']}</span>
                   </div>
                   <div class="an-notes">
                     <div class="an-notes-header" onClick={(event)=>this.toogleCookies(-1, event)} >
                       <div class="an-notes-toogle"> <b>Cookies</b></div>
-                      <div style={{ display: this.showCookieNote(-1) ? 'block' : 'none' }}><b>Bemerkung</b></div>
-                      <div style={{ display: this.showCookieNote(-1)  ? 'block' : 'none' }}><b>Gültigkeit</b></div>
+                      <div style={{ display: this.showCookieNote(-1) ? 'block' : 'none' }}><b>{this.translations['note']}</b></div>
+                      <div style={{ display: this.showCookieNote(-1)  ? 'block' : 'none' }}><b>{this.translations['validity']}</b></div>
                     </div>
                     <div onClick={(event)=>this.toogleCookies(-1, event)}>
                       <div class="an-notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
                         <div class="an-first"><span>areanet-cookiebanner-consent</span></div>
-                        <div>Cookie-Einstellungen</div>
-                        <div>1 Jahr</div>
+                        <div>{this.translations['cookieSettings']}</div>
+                        <div>{this.translations['oneYear']}</div>
                       </div>
                       <div class="an-notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
                         <div class="an-first"><span>areanet-cookiebanner-protect</span></div>
-                        <div>Cookie-Einstellungen</div>
-                        <div>temporär</div>
+                        <div>{this.translations['cookieSettings']}</div>
+                        <div>{this.translations['temp']}</div>
                       </div>
                       {this.cookiesRequired.map((c) => {
                           return <div class="an-notes-list"  style={{ display: this.showCookieNote(-1)  ? 'flex' : 'none' }}>
                             <div class="an-first"><span>{c.name}</span></div>
-                            <div>{c.note}</div>
-                            <div>{c.lifetime}</div>
+                            <div>{c.note[this.lang]}</div>
+                            <div>{c.lifetime[this.lang]}</div>
                           </div>
                         })}
                     </div>
@@ -250,34 +266,34 @@ export class AreanetCookiebanner {
                     <div class="an-cursor">
                       <b>{m.label}</b><br/>
                     
-                      <span class="an-description">{m.description}</span>
+                      <span class="an-description">{m.description[this.lang]}</span>
                     </div>
                     <div class="an-notes">
                     <div class="an-notes-header" onClick={(event)=>this.toogleCookies(index, event)} style={{ display: m.useExternalSource  ? 'flex' : 'none' }}>
-                        <div class="an-notes-toogle an-external"> Dieser Dienst bindet ein externes Skript des Anbieters auf der Website ein.</div>
+                        <div class="an-notes-toogle an-external"> {this.translations['externalScript']}</div>
                       </div>
                       <div class="an-notes-header" onClick={(event)=>this.toogleCookies(index, event)} style={{ display: m.cookiesOptional.length > 0 ? 'flex' : 'none' }}>
                         <div class="an-notes-toogle"> <b>Cookies</b></div>
-                        <div style={{ display: this.showCookieNote(index) ? 'block' : 'none' }}><b>Bemerkung</b></div>
-                        <div style={{ display: this.showCookieNote(index)  ? 'block' : 'none' }}><b>Gültigkeit</b></div>
+                        <div style={{ display: this.showCookieNote(index) ? 'block' : 'none' }}><b>{this.translations['note']}</b></div>
+                        <div style={{ display: this.showCookieNote(index)  ? 'block' : 'none' }}><b>{this.translations['validity']}</b></div>
                       </div>
                   
                       <div onClick={(event)=>this.toogleCookies(index, event)}>
                         {m.cookiesOptional.map((c) => {
                           return <div class="an-notes-list"  style={{ display: this.showCookieNote(index)  ? 'flex' : 'none' }}>
                             <div class="an-first"><span>{c.name}</span></div>
-                            <div>{c.note}</div>
-                            <div>{c.lifetime}</div>
+                            <div>{c.note[this.lang]}</div>
+                            <div>{c.lifetime[this.lang]}</div>
                           </div>
                         })}
                       </div>
                       <div class="an-notes-header"  onClick={(event)=>this.toogleVendor(index, event)}>
-                        <div class="an-notes-toogle an-vendor"> <b>Anbieter</b></div>
+                        <div class="an-notes-toogle an-vendor"> <b>{this.translations['vendor']}</b></div>
                       </div>
                       <div  onClick={(event)=>this.toogleVendor(index, event)}>
                         <div class="an-notes-list" style={{ display: this.showVendorNote(index)  ? 'flex' : 'none' }}>
                           <div class="an-first"><span>{m.vendor}</span></div>
-                          <div><a href={m.privacyUrl}>Datenschutzerklärung</a></div>
+                          <div><a href={m.privacyUrl}>{this.translations['privacy']}</a></div>
                         </div>
                       </div>
                     </div>
@@ -293,26 +309,26 @@ export class AreanetCookiebanner {
             </div>
             
             <div class="an-modal-footer"  style={{ display: this.doShowSettings ? 'flex' : 'none' }} >
-              <button class="an-secondary" onClick={() => this.toggleSettings()}>Einstellungen schließen</button>
-              <button class="an-secondary" style={{ display: this.isMinimal ? 'none' : 'inline-block' }} onClick={() => this.acceptChoosen()}>Auswahl speichern</button>
-              <button class="an-primary" style={{ display: this.isMinimal ? 'none' : 'inline-block' }} onClick={() => this.acceptAll()}>Alle erlauben</button>
+              <button class="an-secondary" onClick={() => this.toggleSettings()}>{this.translations['closeSettings']}</button>
+              <button class="an-secondary" style={{ display: this.isMinimal ? 'none' : 'inline-block' }} onClick={() => this.acceptChoosen()}>{this.translations['saveOptions']}</button>
+              <button class="an-primary" style={{ display: this.isMinimal ? 'none' : 'inline-block' }} onClick={() => this.acceptAll()}>{this.translations['allowAll']}</button>
             </div>
             <div class="an-modal-footer"  style={{ display: this.doShowBanner == 1 ? 'flex' : 'none' }} >
-            <button class="an-secondary" onClick={() => this.toggleSettings()}>Einstellungen</button>
-              <button class="an-primary" onClick={() => this.acceptAll()}>Ok, das habe ich verstanden.</button>
+            <button class="an-secondary" onClick={() => this.toggleSettings()}>{this.translations['settings']}</button>
+              <button class="an-primary" onClick={() => this.acceptAll()}>{this.translations['ok']}</button>
             </div>
             <div class="an-modal-footer"  style={{ display: this.doShowBanner == 2 ? 'flex' : 'none' }} >
-              <button class="an-secondary" onClick={() => this.toggleSettings()}>Einstellungen</button>
-              <button class="an-secondary" onClick={() => this.acceptRequired()}>Nur notwendige erlauben</button>
-              <button class="an-primary"  onClick={() => this.acceptAll()}>Alle erlauben</button>
+              <button class="an-secondary" onClick={() => this.toggleSettings()}>{this.translations['settings']}</button>
+              <button class="an-secondary" onClick={() => this.acceptRequired()}>{this.translations['allowTechnical']}</button>
+              <button class="an-primary"  onClick={() => this.acceptAll()}>{this.translations['allowAll']}</button>
             </div>
             <div class="an-modal-body an-privacy" >
               <p>
                 Version {this.version} by <a href="https://www.area-net.de">AREA-NET GmbH</a>
                 <span style={{ display: (this.privacyUrl || this.imprintUrl) ? 'inline' : 'none' }}> | </span>
-                <a style={{ display: this.privacyUrl ? 'inline' : 'none' }} href={this.privacyUrl}>Datenschutzerklärung</a>  
+                <a style={{ display: this.privacyUrl ? 'inline' : 'none' }} href={this.privacyUrl}>{this.translations['privacy']}</a>  
                 <span style={{ display: (this.privacyUrl && this.imprintUrl) ? 'inline' : 'none' }}> | </span>
-                <a style={{ display: this.imprintUrl ? 'inline' : 'none' }} href={this.imprintUrl}>Impressum</a> 
+                <a style={{ display: this.imprintUrl ? 'inline' : 'none' }} href={this.imprintUrl}>{this.translations['imprint']}</a> 
               </p>
             </div>
           </div>

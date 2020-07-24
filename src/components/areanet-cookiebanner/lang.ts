@@ -1,0 +1,45 @@
+export const LANG = {
+    de: {
+        allowAll: 'Alles erlauben',
+        allowTechnical: 'Nur notwendige erlauben',
+        cookieSettings: 'Cookie-Einstellungen',
+        closeSettings: 'Einstellungen schließen',
+        description: 'Für die optimale Anzeige und Funktionsweise unserer Website setzen wir technisch notwendige Cookies und Technologien ein.',
+        descriptionExtended: 'Darüberhinaus nutzen wir Analyse-, Tracking und/oder Werbetools, um unsere Dienstleistungen entsprechend optimieren und präsentieren können.',
+        externalScript: 'Dieser Dienst bindet ein externes Skript des Anbieters auf der Website ein.',
+        imprint: 'Impressum',
+        note: 'Bemerkung',
+        privacy: 'Datenschutzerklärung',
+        ok: 'Ok, das habe ich verstanden.',
+        oneYear: '1 Jahr',
+        saveOptions: 'Auswahl speichern',
+        settings: 'Einstellungen',
+        technical: 'Technisch notwendige',
+        temp: 'temporär',
+        title: 'Cookie- und Tracking-Einstellungen',
+        validity: 'Gültigkeit',
+        vendor: 'Anbieter'
+    },
+    en: {
+        allowAll: 'Allow anything',
+        allowTechnical: 'Allow only necessary',
+        cookieSettings: 'Cookie settings',
+        closeSettings: 'Close settings',
+        description: 'We use technically necessary cookies and technologies for the optimal display and functionality of our website.',
+        descriptionExtended: 'Furthermore, we use analysis, tracking and/or advertising tools to optimize and present our services accordingly.',
+        externalScript: 'This service integrates an external script of the provider on the website.',
+        imprint: 'Imprint',
+        note: 'Note',
+        privacy: 'Privacy policy',
+        ok: 'Okay, I got that.',
+        oneYear: '1 Year',
+        saveOptions: 'Save selection',
+        settings: 'Settings',
+        technical: 'Technically necessary',
+        temp: 'temporary',
+        title: 'Cookie and tracking settings',
+        validity: 'Validity',
+        vendor: 'Supplier'
+    }
+    
+}

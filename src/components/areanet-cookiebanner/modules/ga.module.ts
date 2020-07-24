@@ -3,13 +3,14 @@ import { Module } from "./module";
 export class GaModule extends Module{
     key: string             = 'ga';
     label: string           = 'Google Analytics';
-    description: string     = 'Um unsere Website besser für Sie optimieren zu können, werten wir die Zugriffe \
-                               und die Nutzung aus. Dafür binden wir einen externen Dienst von Google ein, der \
-                               Zugriff auf personenbezogene Daten haben und auswerten kann.';
+    description: any        = {
+        de: 'Um unsere Website besser für Sie optimieren zu können, werten wir die Zugriffe und die Nutzung aus. Dafür binden wir einen externen Dienst von Google ein, der Zugriff auf personenbezogene Daten haben und auswerten kann.',
+        en: 'In order to be able to optimize our website better for you, we evaluate the access and use. For this purpose, we integrate an external service from Google, which can access and evaluate personal data.'
+    };
     cookiesOptional         = [
-        {name: '_ga', lifetime: '2 Jahre', note: 'Analyse'},
-        {name: '_gat', lifetime: '2 Jahre', note: 'Analyse'},
-        {name: '_gid', lifetime: '2 Jahre', note: 'Analyse'}
+        {name: '_ga', lifetime: {de: '2 Jahre', en: '2 Years'}, note: {de: 'Analyse', en: 'Analytics'}},
+        {name: '_gat', lifetime: {de: '2 Jahre', en: '2 Years'}, note: {de: 'Analyse', en: 'Analytics'}},
+        {name: '_gid', lifetime: {de: '2 Jahre', en: '2 Years'}, note: {de: 'Analyse', en: 'Analytics'}}
     ];
     useExternalSource = true;
     vendor = 'Google';
@@ -23,7 +24,7 @@ export class GaModule extends Module{
     init(data: any){
         super.init(data);
 
-        this.cookiesRequired = [{name: 'ga-disable-' + this.data, lifetime: '1 Jahr', note: 'Deaktivierung Google Analytics'}];
+        this.cookiesRequired = [{name: 'ga-disable-' + this.data, lifetime: {de: '1 Jahr', en: '1 Year'}, note: {de: 'Deaktivierung Google Analytics', en: 'Deactivation of Google Analytics'}}];
     }
 
     decline(){

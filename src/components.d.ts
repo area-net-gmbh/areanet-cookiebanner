@@ -11,6 +11,7 @@ export namespace Components {
         "cookies": string;
         "gaeProperty": number;
         "imprintUrl": string;
+        "lang": string;
         "openBanner": () => Promise<void>;
         "privacyUrl": string;
         "thirdparty": string;
@@ -33,6 +34,7 @@ declare namespace LocalJSX {
         "cookies"?: string;
         "gaeProperty"?: number;
         "imprintUrl"?: string;
+        "lang"?: string;
         "privacyUrl"?: string;
         "thirdparty"?: string;
     }

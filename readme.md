@@ -76,6 +76,7 @@ Alle Attribute sind optional. Das Setzen von Impressum und Datenschutzerklärung
 | --- | --- | --- | --- |
 | color | Farbschema | light/dark | default=dark |
 | cookies | Name1,Beschreibung1,Laufzeit1;Name2,... | phpsessid,Session,temporär | Fügt eingesetzte technisch notwendige Cookie bei der Auflistung dieser Cookies im Banner hinzu. Name, Beschreibung und Laufzeit pro Cookie kommagetrennt, mehrere Cookies können per Semikolen erfasst werden. |
+| lang | de/en | | Sprache |
 | module-fb | Facebook Pixel-ID | | |
 | module-ga | Google Analytics-ID | | |
 | module-gmap | Callback-Funktion | initMap(isEnabled) | Die Funktion wird aufgerufen, wenn der Benutzer der Nutzung von Google Maps zugestimmt hat. Als Parameter wird ein Bool-Wert übergeben, ob der Benutzer zugestimmt hat oder nicht. |

@@ -9,7 +9,7 @@ export class Module{
     public doVendorNoteShow: boolean = false;
     public cookiesRequired : CookieInterface[] = [];
     public cookiesOptional : CookieInterface[] = [];
-    public description: string = '';
+    public description: any = {};
     public key: string = '';
     public label: string = '';
     public vendor: string = '';
