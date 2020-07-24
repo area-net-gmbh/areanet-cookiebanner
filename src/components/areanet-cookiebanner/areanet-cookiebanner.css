@@ -212,30 +212,31 @@ button.an-secondary:hover{
 }
 
 .an-checbox-mark{
+  font-family: Arial Unicode MS, Arial;
   border-radius: 4px;
   text-align:center;
   width:20px;
   height:20px;
   background-color:var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-default-color-secondary));
-  color:transparent;
+  color:transparent !important;
   border: 1px solid var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
 }
 
 .an-modal-container.light .an-checbox-mark{
   background-color:var(--areanet-cookiebanner-color-secondary, var(--areanet-cookiebanner-light-color-secondary));
-  color:transparent;
+  color:transparent !important;
   border: 1px solid var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-light-color-text));
 }
 
 .an-checkbox:checked + .an-checbox-mark{
   background-color:var(--areanet-cookiebanner-color-primary, var(--areanet-cookiebanner-default-color-primary));
-  color:var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
+  color:var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text)) !important;
   opacity: 1;
 }
 
 .an-modal-container.light .an-checkbox:checked + .an-checbox-mark{
   background-color:var(--areanet-cookiebanner-color-primary, var(--areanet-cookiebanner-light-color-primary));
-  color:var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-light-color-background));
+  color:var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-light-color-background)) !important;;
 }
 
 .an-notes-list,
