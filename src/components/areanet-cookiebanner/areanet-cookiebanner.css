@@ -55,16 +55,6 @@
   width:48%;
 }
 
-.an-modal-container.important{
-  
-}
-
-.an-modal-container.light.important{
-  border:1px solid var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-light-color-text));
-  border-bottom:none;
-}
-
-
 .an-modal-container.down{
   height:20px;
 }

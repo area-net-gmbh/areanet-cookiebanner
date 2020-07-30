@@ -7,6 +7,16 @@ export class FbModule extends Module{
       de: 'Um unsere Website besser für Sie optimieren zu können, nutzen wir Facebook Pixel zur Analyse. Dafür binden wir einen externen Dienst von Facebook ein, der Zugriff auf personenbezogene Daten haben und auswerten kann.',
       en: 'To be able to optimize our website better for you, we use Facebook pixels for analysis. For this purpose, we integrate an external Facebook service that can access and evaluate personal data.'
     };
+    cookiesOptional         = [
+      {name: 'fr', lifetime: {de: '3 Monate', en: '3 Months'}, note: {de: 'Tracking', en: 'Tracking', domain: '.facebook.com'}},
+      {name: 'spin', lifetime: {de: '1 Tag', en: '1 Year'}, note: {de: 'Tracking', en: 'Tracking', domain: '.facebook.com'}},
+      {name: 'xs', lifetime: {de: '1 Jahr', en: '1 Year'}, note: {de: 'Tracking', en: 'Tracking', domain: '.facebook.com'}},
+      {name: 'c-user', lifetime: {de: '1 Jahr', en: '1 Year'}, note: {de: 'Tracking', en: 'Tracking'}, domain: '.facebook.com'},
+      {name: 'sb', lifetime: {de: '2 Jahre', en: '2 Years'}, note: {de: 'Tracking', en: 'Tracking', domain: '.facebook.com'}},
+      {name: 'dpr', lifetime: {de: '1 Monat', en: '1 Month'}, note: {de: 'Tracking', en: 'Tracking', domain: '.facebook.com'}},
+      {name: 'datr', lifetime: {de: '1 Jahr', en: '1 Year'}, note: {de: 'Tracking', en: 'Tracking', domain: '.facebook.com'}},
+      {name: '_fbp', lifetime: {de: '3 Monate', en: '3 Months'}, note: {de: 'Tracking', en: 'Tracking'}}
+    ];
     cookiesRequired         = [{name: 'fb-disabled', lifetime: {de: '1 Jahr', en: '1 Year'}, note: {de: 'Deaktivierung Facebook Pixel', en: 'Deactivation of Facebook Pixel'}}];
     privacyUrl              = 'https://www.facebook.com/about/privacy/update';
     vendor                  = 'Facebook Ireland Limited';
@@ -18,6 +28,14 @@ export class FbModule extends Module{
 
     decline(){
         this.cookieService.set('fb-disable');
+
+        const url = document.domain.split('.');
+        const domain = '.' + url[url.length-2] + '.' + url[url.length-1];
+
+        for(let c of this.cookiesOptional){
+          this.cookieService.delete(c.name, c.domain ? c.domain : domain);  
+        }
+        
     }
 
     isAccept(){
