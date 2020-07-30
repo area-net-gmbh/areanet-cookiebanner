@@ -43,12 +43,52 @@
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
   position: fixed;
-  bottom:0;
-  left:25%;
-  width:48%;
   padding:1%;
   text-align: center;
   z-index: 9000;
+}
+
+.an-modal-container.bottom,
+.an-modal-container.important{
+  bottom:0;
+  left:25%;
+  width:48%;
+}
+
+.an-modal-container.important{
+  
+}
+
+.an-modal-container.light.important{
+  border:1px solid var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-light-color-text));
+  border-bottom:none;
+}
+
+
+.an-modal-container.down{
+  height:20px;
+}
+
+.btnDown{
+  cursor:pointer;
+  float:right;
+  background-color: var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-default-color-background));
+  border:1px solid var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
+  color:var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-default-color-text));
+  padding:0 6px;
+}
+
+.an-modal-container.light .btnDown{
+  border:1px solid var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-light-color-text));
+  color:var(--areanet-cookiebanner-color-text, var(--areanet-cookiebanner-light-color-text));
+  background-color: var(--areanet-cookiebanner-color-background, var(--areanet-cookiebanner-light-color-background));
+}
+
+.an-modal-container.center:not(.important){
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  width:48%;
 }
 
 .an-modal-container.light{
@@ -297,17 +337,31 @@ button.an-secondary:hover{
   justify-content: center;
 }
 
-@media only screen and (max-width: 1600px) {
-  .an-modal-container {
-    width:78%;
+@media only screen and (max-width: 1400px) {
+  .an-modal-container.center.settings,
+  .an-modal-container.bottom.settings {
+    width:80%;
+  }
+
+  .an-modal-container.settings.important{
     left:10%;
   }
+
 }
 
 @media only screen and (max-width: 960px) {
-  .an-modal-container {
-    width:98%;
-    left:0;
+  .an-modal-container.center,
+  .an-modal-container.bottom{
+    width:90%;
+  }
+
+  .an-modal-container.center.settings,
+  .an-modal-container.bottom.settings{
+    width:90%;
+  }
+
+  .an-modal-container.settings.important{
+    left:5%;
   }
 }
 

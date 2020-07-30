@@ -9,11 +9,13 @@
 
 | Property      | Attribute      | Description | Type     | Default     |
 | ------------- | -------------- | ----------- | -------- | ----------- |
+| `buttonMode`  | `button-mode`  |             | `string` | `undefined` |
 | `color`       | `color`        |             | `string` | `undefined` |
 | `cookies`     | `cookies`      |             | `string` | `undefined` |
 | `gaeProperty` | `gae-property` |             | `number` | `undefined` |
 | `imprintUrl`  | `imprint-url`  |             | `string` | `undefined` |
 | `lang`        | `lang`         |             | `string` | `undefined` |
+| `position`    | `position`     |             | `string` | `undefined` |
 | `privacyUrl`  | `privacy-url`  |             | `string` | `undefined` |
 | `thirdparty`  | `thirdparty`   |             | `string` | `undefined` |
 

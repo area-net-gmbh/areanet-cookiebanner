@@ -16,22 +16,26 @@ export class AreanetCookiebanner {
   cookieService : CookieService = new CookieService();
   cookieConsentName: string = 'areanet-cookiebanner-consent';
   cookiesRequired : CookieInterface[] = [];
+  isImportantPage : boolean = false;
   loggerService : LoggerService = new LoggerService(this.cookieService);
   modules : Module[] = [];
   
   doShowBannerStore: number = 0;
   uuidService : UuidService = new UuidService();
 
-  version : string = '1.4.0';
+  version : string = '1.4.1';
+  
 
   @Element() el: HTMLElement;
   @Prop() thirdparty: string;
   @Prop() lang: string;
   @Prop() gaeProperty: number;
+  @Prop() buttonMode : string;
   @Prop() privacyUrl: string;
   @Prop() imprintUrl: string;
   @Prop() cookies: string;
   @Prop() color: string;
+  @Prop() position: string;
 
   @State() isMinimal: boolean = true;
   @State() description: any = {
@@ -42,6 +46,7 @@ export class AreanetCookiebanner {
     'en': 'Furthermore, we use analysis, tracking and/or advertising tools to optimize and present our services accordingly.'};
   @State() doShowBanner: number = 0;
   @State() doShowSettings: boolean = false;
+  @State() isDown: boolean = false;
   @State() showCookieNotes: number[] = [];
   @State() showVendorNotes: number[] = [];
   @State() show : boolean = false;
@@ -55,10 +60,13 @@ export class AreanetCookiebanner {
 
   componentWillLoad(){
 
-    this.lang         = this.lang == 'en' ? 'en' : 'de';
-    this.translations = LANG[this.lang];
-
+    this.buttonMode   = this.buttonMode == 'minimal' ? 'minimal' : 'default';
     this.color        = this.color == 'light' ? 'light' : 'dark';
+    this.lang         = this.lang == 'en' ? 'en' : 'de';
+    this.position     = this.position == 'center' ? 'center' : 'bottom';
+    this.translations = LANG[this.lang];
+  
+    this.isImportantPage = (window.location.pathname == this.privacyUrl || window.location.pathname == this.imprintUrl);
 
     for(const moduleName in Modules){
       const module : Module = new Modules[moduleName]();
@@ -206,15 +214,19 @@ export class AreanetCookiebanner {
 
   openDataPrivacy(){
     document.location.href = this.privacyUrl;
+
   }
 
   render() {
       return <Host>
         <div class="link" onClick={() => this.toggleSettings()}><slot/></div>
-          <div class="an-modal-back"  style={{ display: this.showBanner()  ? 'block' : 'none' }}></div>
-          <div class={'an-modal-container ' + this.color}  style={{ display: this.showBanner()  ? 'block' : 'none' }}>
+          <div class="an-modal-back"  style={{ display: this.showBanner() && !this.isImportantPage ? 'block' : 'none' }}></div>
+          <div class={'an-modal-container ' + this.color + ' ' + this.position + ' ' + (this.doShowSettings ? 'settings' : '') + ' ' + (this.isImportantPage ? 'important' : '') + ' ' + (this.isDown ? 'down' : '')}  style={{ display: this.showBanner()  ? 'block' : 'none' }}>
             <div class="an-modal-header">
+              <buttom class="btnDown" onClick={() => this.toggleUpDown()} style={{ display: this.isImportantPage && !this.isDown  ? 'block' : 'none' }}>&minus;</buttom>
+              <buttom class="btnDown" onClick={() => this.toggleUpDown()} style={{ display: this.isImportantPage && this.isDown  ? 'block' : 'none' }}>+</buttom>
               <h2>{this.translations['title']}</h2>
+              
             </div>
             <div class="an-modal-body" style={{ display: this.doShowSettings  ? 'none' : 'block' }}>
               {this.translations['description']}
@@ -314,12 +326,12 @@ export class AreanetCookiebanner {
               <button class="an-primary" style={{ display: this.isMinimal ? 'none' : 'inline-block' }} onClick={() => this.acceptAll()}>{this.translations['allowAll']}</button>
             </div>
             <div class="an-modal-footer"  style={{ display: this.doShowBanner == 1 ? 'flex' : 'none' }} >
-            <button class="an-secondary" onClick={() => this.toggleSettings()}>{this.translations['settings']}</button>
+              <button class="an-secondary" onClick={() => this.toggleSettings()}>{this.translations['settings']}</button>
               <button class="an-primary" onClick={() => this.acceptAll()}>{this.translations['ok']}</button>
             </div>
             <div class="an-modal-footer"  style={{ display: this.doShowBanner == 2 ? 'flex' : 'none' }} >
               <button class="an-secondary" onClick={() => this.toggleSettings()}>{this.translations['settings']}</button>
-              <button class="an-secondary" onClick={() => this.acceptRequired()}>{this.translations['allowTechnical']}</button>
+              <button class="an-secondary" style={{ display: this.buttonMode == 'minimal' ? 'none' : 'inline-block' }} onClick={() => this.acceptRequired()}>{this.translations['allowTechnical']}</button>
               <button class="an-primary"  onClick={() => this.acceptAll()}>{this.translations['allowAll']}</button>
             </div>
             <div class="an-modal-body an-privacy" >
@@ -360,6 +372,10 @@ export class AreanetCookiebanner {
     }
 
     evt.preventDefault();
+  }
+
+  toggleUpDown(){
+    this.isDown = this.isDown ? false : true;
   }
 
   toogleVendor(index, evt){
