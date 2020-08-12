@@ -5,7 +5,7 @@ export const LANG = {
         cookieSettings: 'Cookie-Einstellungen',
         closeSettings: 'Einstellungen schließen',
         description: 'Für die optimale Anzeige und Funktionsweise unserer Website setzen wir technisch notwendige Cookies und Technologien ein.',
-        descriptionExtended: 'Darüberhinaus nutzen wir Analyse-, Tracking und/oder Werbetools, um unsere Dienstleistungen entsprechend optimieren und präsentieren können.',
+        descriptionExtended: 'Darüberhinaus nutzen wir Analyse-, Tracking und/oder Werbetools, um unsere Dienstleistungen entsprechend optimieren und präsentieren zu können.',
         externalScript: 'Dieser Dienst bindet ein externes Skript des Anbieters auf der Website ein.',
         imprint: 'Impressum',
         note: 'Bemerkung',
