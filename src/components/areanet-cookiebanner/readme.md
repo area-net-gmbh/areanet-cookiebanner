@@ -17,6 +17,7 @@
 | `lang`        | `lang`         |             | `string` | `undefined` |
 | `position`    | `position`     |             | `string` | `undefined` |
 | `privacyUrl`  | `privacy-url`  |             | `string` | `undefined` |
+| `pro`         | `pro`          |             | `string` | `undefined` |
 | `thirdparty`  | `thirdparty`   |             | `string` | `undefined` |
 
 
