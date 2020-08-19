@@ -16,6 +16,7 @@ export namespace Components {
         "openBanner": () => Promise<void>;
         "position": string;
         "privacyUrl": string;
+        "pro": string;
         "thirdparty": string;
     }
 }
@@ -40,6 +41,7 @@ declare namespace LocalJSX {
         "lang"?: string;
         "position"?: string;
         "privacyUrl"?: string;
+        "pro"?: string;
         "thirdparty"?: string;
     }
     interface IntrinsicElements {

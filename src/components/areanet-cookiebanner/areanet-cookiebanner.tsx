@@ -17,13 +17,14 @@ export class AreanetCookiebanner {
   cookieConsentName: string = 'areanet-cookiebanner-consent';
   cookiesRequired : CookieInterface[] = [];
   isImportantPage : boolean = false;
+  isPro : boolean = false;
   loggerService : LoggerService = new LoggerService(this.cookieService);
   modules : Module[] = [];
   
   doShowBannerStore: number = 0;
   uuidService : UuidService = new UuidService();
 
-  version : string = '1.4.2';
+  version : string = '1.4.3';
   
 
   @Element() el: HTMLElement;
@@ -36,6 +37,7 @@ export class AreanetCookiebanner {
   @Prop() cookies: string;
   @Prop() color: string;
   @Prop() position: string;
+  @Prop() pro: string;
 
   @State() isMinimal: boolean = true;
   @State() description: any = {
@@ -60,6 +62,7 @@ export class AreanetCookiebanner {
 
   componentWillLoad(){
 
+    this.isPro        = (this.pro == '1');
     this.buttonMode   = this.buttonMode == 'minimal' ? 'minimal' : 'default';
     this.color        = this.color == 'light' ? 'light' : 'dark';
     this.lang         = this.lang == 'en' ? 'en' : 'de';
@@ -336,8 +339,8 @@ export class AreanetCookiebanner {
             </div>
             <div class="an-modal-body an-privacy" >
               <p>
-                Version {this.version} by <a href="https://www.area-net.de">AREA-NET GmbH</a>
-                <span style={{ display: (this.privacyUrl || this.imprintUrl) ? 'inline' : 'none' }}> | </span>
+                <span style={{ display: (this.isPro) ? 'none' : 'inline' }}>Version {this.version} by <a href="https://www.area-net.de">AREA-NET GmbH</a></span>
+                <span style={{ display: ((this.privacyUrl || this.imprintUrl) && !this.isPro) ? 'inline' : 'none' }}> | </span>
                 <a style={{ display: this.privacyUrl ? 'inline' : 'none' }} href={this.privacyUrl}>{this.translations['privacy']}</a>  
                 <span style={{ display: (this.privacyUrl && this.imprintUrl) ? 'inline' : 'none' }}> | </span>
                 <a style={{ display: this.imprintUrl ? 'inline' : 'none' }} href={this.imprintUrl}>{this.translations['imprint']}</a> 

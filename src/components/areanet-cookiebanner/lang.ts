@@ -1,6 +1,6 @@
 export const LANG = {
     de: {
-        allowAll: 'Alles erlauben',
+        allowAll: 'Alle erlauben',
         allowTechnical: 'Nur notwendige erlauben',
         cookieSettings: 'Cookie-Einstellungen',
         closeSettings: 'Einstellungen schließen',
