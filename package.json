@@ -1,6 +1,6 @@
 {
   "name": "areanet-cookiebanner",
-  "version": "1.4.2",
+  "version": "1.4.4",
   "description": "Stencil Component Starter",
   "main": "dist/index.js",
   "module": "dist/index.mjs",

@@ -345,6 +345,10 @@ button.an-secondary:hover{
     width:90%;
   }
 
+  .an-modal-container.bottom{
+    left:5%;
+  }
+
   .an-modal-container.center.settings,
   .an-modal-container.bottom.settings{
     width:90%;

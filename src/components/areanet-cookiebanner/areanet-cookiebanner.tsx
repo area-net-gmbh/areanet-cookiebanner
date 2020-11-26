@@ -24,7 +24,7 @@ export class AreanetCookiebanner {
   doShowBannerStore: number = 0;
   uuidService : UuidService = new UuidService();
 
-  version : string = '1.4.3';
+  version : string = '1.4.4';
   
 
   @Element() el: HTMLElement;
