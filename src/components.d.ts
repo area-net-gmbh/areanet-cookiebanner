@@ -18,6 +18,7 @@ export namespace Components {
         "privacyUrl": string;
         "pro": string;
         "thirdparty": string;
+        "v": string;
     }
 }
 declare global {
@@ -43,6 +44,7 @@ declare namespace LocalJSX {
         "privacyUrl"?: string;
         "pro"?: string;
         "thirdparty"?: string;
+        "v"?: string;
     }
     interface IntrinsicElements {
         "areanet-cookiebanner": AreanetCookiebanner;

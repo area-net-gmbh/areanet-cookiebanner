@@ -19,6 +19,7 @@
 | `privacyUrl`  | `privacy-url`  |             | `string` | `undefined` |
 | `pro`         | `pro`          |             | `string` | `undefined` |
 | `thirdparty`  | `thirdparty`   |             | `string` | `undefined` |
+| `v`           | `v`            |             | `string` | `undefined` |
 
 
 ## Methods

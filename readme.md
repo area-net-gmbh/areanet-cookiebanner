@@ -38,7 +38,7 @@
 (4) Einbdung des Buttons z.B. in der Footer-Navigation
 
 ```
-<areanet-cookiebanner module-ga="UAE-32323-2323" cookies="phpsessid,Session,temporär" module-fb="FB-ID" imprint-url="impressum.html" privacy-url="datenschutz.html">Cookie-Einstellungen</areanet-cookiebanner>
+<areanet-cookiebanner v="1" module-ga="UAE-32323-2323" cookies="phpsessid,Session,temporär" module-fb="FB-ID" imprint-url="impressum.html" privacy-url="datenschutz.html">Cookie-Einstellungen</areanet-cookiebanner>
 ```
 
 ## Konfiguration 
@@ -80,11 +80,13 @@ Alle Attribute sind optional. Das Setzen von Impressum und Datenschutzerklärung
 | lang | de/en | | Sprache |
 | imprint-url | URL | impressum.html | Pfad/URL zur Impressumsseite |
 | module-fb | Facebook Pixel-ID | | |
-| module-ga | Google Analytics-ID | | |
+| module-ga | Google Analytics-ID | UAE-123XYZ | |
+| module-gtm | Google Tag Manager ID | GTM-123XYZ | |
 | module-gmap | Callback-Funktion | initMap(isEnabled) | Die Funktion wird aufgerufen, wenn der Benutzer der Nutzung von Google Maps zugestimmt hat. Als Parameter wird ein Bool-Wert übergeben, ob der Benutzer zugestimmt hat oder nicht. |
 | module-yt | Callback-Funktion | initYoutube(isEnabled) | Die Funktion wird aufgerufen, wenn der Benutzer der Nutzung von Youtube zugestimmt hat. Als Parameter wird ein Bool-Wert übergeben, ob der Benutzer zugestimmt hat oder nicht. |
 | position | Position | center/bottom | Position des Cookie-Banner |
 | privacy-url | URL | datenschutz.html | Pfad/URL zur Datenschutzseite |
+| v | Version (optional) | 1 | Wenn Sie neue Module nutzen, sollten Sie die Version erhöhen, dass die Benutzer den Änderungern erneut zustimmen müssen. |
 
 ### CSS-Anpassungen
 

@@ -14,7 +14,7 @@ import {LANG} from './lang';
 })
 export class AreanetCookiebanner {
   cookieService : CookieService = new CookieService();
-  cookieConsentName: string = 'areanet-cookiebanner-consent';
+  cookieConsentName: string = 'areanet-cookiebanner-consent-v';
   cookiesRequired : CookieInterface[] = [];
   isImportantPage : boolean = false;
   isPro : boolean = false;
@@ -24,7 +24,7 @@ export class AreanetCookiebanner {
   doShowBannerStore: number = 0;
   uuidService : UuidService = new UuidService();
 
-  version : string = '1.4.4';
+  version : string = '1.5.0';
   
 
   @Element() el: HTMLElement;
@@ -38,6 +38,7 @@ export class AreanetCookiebanner {
   @Prop() color: string;
   @Prop() position: string;
   @Prop() pro: string;
+  @Prop() v: string;
 
   @State() isMinimal: boolean = true;
   @State() description: any = {
@@ -99,7 +100,7 @@ export class AreanetCookiebanner {
       };
     }
 
-    if(!this.cookieService.get(this.cookieConsentName)){
+    if(!this.cookieService.get(this.cookieConsentName + this.v)){
       this.doShowBanner = this.isMinimal ? 1 : 2;
       var logData = {'tech': true};
       for(const m of this.modules){
@@ -124,7 +125,7 @@ export class AreanetCookiebanner {
 
     if(navigator.userAgent.indexOf('MSIE')!==-1|| navigator.appVersion.indexOf('Trident/') > -1){
       const uuid = this.uuidService.generate4IE().toString();
-      this.cookieService.set(this.cookieConsentName, uuid);
+      this.cookieService.set(this.cookieConsentName + this.v, uuid);
       for(const m of this.modules){
         m.accept();
         logData[m.key] = true;
@@ -136,7 +137,7 @@ export class AreanetCookiebanner {
       window.location.reload();
     }else{
       this.uuidService.generate().then((uuid) => {
-        this.cookieService.set(this.cookieConsentName, uuid);
+        this.cookieService.set(this.cookieConsentName + this.v, uuid);
         for(const m of this.modules){
           m.accept();
           logData[m.key] = true;
@@ -162,12 +163,12 @@ export class AreanetCookiebanner {
 
     if(navigator.userAgent.indexOf('MSIE')!==-1|| navigator.appVersion.indexOf('Trident/') > -1){
       const uuid = this.uuidService.generate4IE().toString();
-      this.cookieService.set(this.cookieConsentName, uuid);
+      this.cookieService.set(this.cookieConsentName + this.v, uuid);
       this.doShowBanner = 0;
       window.location.reload();
     }else{
       this.uuidService.generate().then((uuid) => {
-        this.cookieService.set(this.cookieConsentName, uuid);
+        this.cookieService.set(this.cookieConsentName + this.v, uuid);
         this.doShowBanner = 0;
         window.location.reload();
       });
@@ -196,12 +197,12 @@ export class AreanetCookiebanner {
 
     if(navigator.userAgent.indexOf('MSIE')!==-1|| navigator.appVersion.indexOf('Trident/') > -1){
       const uuid = this.uuidService.generate4IE().toString();
-      this.cookieService.set(this.cookieConsentName, uuid);
+      this.cookieService.set(this.cookieConsentName + this.v, uuid);
       this.doShowSettings = false;
       window.location.reload();
     }else{
       this.uuidService.generate().then((uuid) => {
-        this.cookieService.set(this.cookieConsentName, uuid);
+        this.cookieService.set(this.cookieConsentName + this.v, uuid);
         this.doShowSettings = false;
         window.location.reload();
       });
@@ -222,7 +223,7 @@ export class AreanetCookiebanner {
 
   render() {
       return <Host>
-        <div class="link" onClick={() => this.toggleSettings()}><slot/></div>
+        <div data-nosnippet class="link" onClick={() => this.toggleSettings()}><slot/></div>
           <div class="an-modal-back"  style={{ display: this.showBanner() && !this.isImportantPage ? 'block' : 'none' }}></div>
           <div class={'an-modal-container ' + this.color + ' ' + this.position + ' ' + (this.doShowSettings ? 'settings' : '') + ' ' + (this.isImportantPage ? 'important' : '') + ' ' + (this.isDown ? 'down' : '')}  style={{ display: this.showBanner()  ? 'block' : 'none' }}>
             <div class="an-modal-header">
