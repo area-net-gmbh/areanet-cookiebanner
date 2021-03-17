@@ -200,6 +200,31 @@ CSS-Anpassungen können über CSS-Variable durchgeführt werden.
 
 </script>
 ```
+### Vimeo Einbindung
+
+```
+<iframe class="vimeo" style="display:none;" data-src="https://player.vimeo.com/video/VIDEO_ID" width="640" height="360" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+<div style="display:none;" class="no-vimeo">Vimeo-Videos sind deaktiviert.</div>
+...
+<areanet-cookiebanner id="cookie-banner" module-vi="loadVimeo" >Cookie-Einstellungen</areanet-cookiebanner>
+...
+<script>
+
+  window.loadVimeo = function(isEnabled){
+    if(isEnabled){
+      for(let el of document.getElementsByClassName('.vimeo')){
+        el.setAttribute('src', el.getAttribute('data-src'));
+        el.style.display = 'block';
+      }
+    }else{
+      for(let el of document.getElementsByClassName('.no-vimeo')){
+        el.style.display = 'block';
+      }
+    }
+  }
+
+</script>
+```
 
 ## Entwicklung
 
